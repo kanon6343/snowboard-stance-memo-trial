@@ -1,5 +1,6 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1076';
+const RELEASE = '1077';
+const APP_VERSION = '2.1.5';
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
@@ -37,6 +38,9 @@ self.addEventListener('activate', event => {
   })());
 });
 self.addEventListener('message', event => {
+  if (event.data?.type === 'GET_RELEASE_INFO') {
+    event.ports?.[0]?.postMessage({type: 'RELEASE_INFO', version: APP_VERSION, release: RELEASE});
+  }
   if (event.data?.type === 'ACTIVATE_UPDATE') self.skipWaiting();
 });
 self.addEventListener('fetch', event => {
