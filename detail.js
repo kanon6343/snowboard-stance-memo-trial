@@ -227,10 +227,9 @@ const DetailEditor = (() => {
     }
     return DetailData.normalize(collect());
   }
-  const controls=document.createElement('details');controls.className='detail-filters menu-shape-filter';
-  controls.innerHTML=`<summary>板の形状で絞り込み<span id="shapeFilterCount">指定なし</span></summary><div class="detail-grid">${Object.entries({shape:'シェイプ',nose:'ノーズ形状',bend:'ベンド'}).map(([key,label])=>`<label>${label}<select id="filter-${key}"><option value="">すべて</option><option value="__unset__">未設定</option>${Object.entries(DetailData.choices[key]).map(([v,t])=>`<option value="${v}">${t}</option>`).join('')}</select></label>`).join('')}</div><p class="menu-note">複数指定はすべて一致する記録を表示します。未入力の過去データは「未設定」で探せます。</p><p id="detailFilterStatus" class="menu-note" role="status"></p>`;
+  const controls=document.createElement('section');controls.className='detail-filters menu-shape-filter';controls.setAttribute('aria-labelledby','shapeFilterHeading');
+  controls.innerHTML=`<div class="shape-filter-head"><h3 id="shapeFilterHeading">板の形状で絞り込み</h3><span id="shapeFilterCount">指定なし</span></div><div class="detail-grid">${Object.entries({shape:'シェイプ',nose:'ノーズ形状',bend:'ベンド'}).map(([key,label])=>`<label>${label}<select id="filter-${key}"><option value="">すべて</option><option value="__unset__">未設定</option>${Object.entries(DetailData.choices[key]).map(([v,t])=>`<option value="${v}">${t}</option>`).join('')}</select></label>`).join('')}</div><p class="menu-note">複数指定はすべて一致する記録を表示します。未入力の過去データは「未設定」で探せます。</p><p id="detailFilterStatus" class="menu-note" role="status"></p>`;
   byId('menuFilters').appendChild(controls);
-  controls.open=Object.values(filters).some(Boolean);
   const filterStatus=()=>{const labels=Object.entries({shape:'シェイプ',nose:'ノーズ',bend:'ベンド'}).filter(([k])=>filters[k]).map(([k,label])=>`${label}：${filters[k]==='__unset__'?'未設定':DetailData.choices[k][filters[k]]}`);byId('detailFilterStatus').textContent=labels.length?labels.join(' / '):'形状の絞り込みなし';byId('shapeFilterCount').textContent=labels.length?`${labels.length}条件`:'指定なし';controls.dataset.active=String(labels.length>0);};
   for(const key of Object.keys(filters)){byId(`filter-${key}`).value=filters[key];byId(`filter-${key}`).addEventListener('change',()=>{filters[key]=byId(`filter-${key}`).value;persist(filterKey,JSON.stringify(filters));filterStatus();render();});}
   byId('btnFilterClear').addEventListener('click',()=>{for(const k of Object.keys(filters)){filters[k]='';byId(`filter-${k}`).value='';}persist(filterKey,JSON.stringify(filters));filterStatus();});
