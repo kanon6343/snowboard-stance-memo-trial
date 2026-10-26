@@ -1,5 +1,5 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1075';
+const RELEASE = '1076';
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
@@ -25,7 +25,9 @@ const SHELL = [
 ].map(path => new URL(path, BASE).href);
 const SHELL_URLS = new Set(SHELL);
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(SHELL)));
+  // Refresh the HTTP cache too, so an old unversioned index.html cannot be
+  // copied into the newly installed offline shell.
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(SHELL.map(url => new Request(url, {cache: 'reload'})))));
 });
 self.addEventListener('activate', event => {
   event.waitUntil((async () => {
