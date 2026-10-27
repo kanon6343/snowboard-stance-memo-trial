@@ -741,7 +741,13 @@ function render() {
 
   // ソート
   const cmpStr = (a, b) => String(a || "").localeCompare(String(b || ""), "ja");
-  const getTime = (x) => String(x?.dateTime || "");
+  const getTime = item => { const key = recordDateKey(item); return key === null ? null : Number(key); };
+  const compareTime = (a, b, descending) => {
+    const left = getTime(a), right = getTime(b);
+    if (left === null) return right === null ? 0 : 1;
+    if (right === null) return -1;
+    return descending ? right - left : left - right;
+  };
 
   list.sort((a, b) => {
     if (favSortOn) {
@@ -751,9 +757,9 @@ function render() {
 
     switch (sortMode) {
       case "savedAsc":
-        return getTime(a).localeCompare(getTime(b));
+        return compareTime(a, b, false);
       case "savedDesc":
-        return getTime(b).localeCompare(getTime(a));
+        return compareTime(a, b, true);
       case "boardAsc":
         return cmpStr(a.board, b.board);
       case "snowAsc":
@@ -840,7 +846,7 @@ function render() {
         <button
           type="button"
           class="fav-btn ${fav ? "active" : ""}"
-          data-fav-id="${item.id}"
+          data-fav-id="${escapeHtml(item.id)}"
           title="${fav ? "お気に入り解除" : "お気に入り登録"}"
           aria-label="${fav ? "お気に入り解除" : "お気に入り登録"}"
           aria-pressed="${fav}"
@@ -866,12 +872,12 @@ function render() {
       </div>
 
       <div class="history-actions">
-        <button type="button" class="btn-load" data-load-id="${item.id}">この設定を使う</button>
+        <button type="button" class="btn-load" data-load-id="${escapeHtml(item.id)}">この設定を使う</button>
 
         <button
           type="button"
           class="btn-del ${fav ? "is-protected" : ""}"
-          data-del-id="${item.id}"
+          data-del-id="${escapeHtml(item.id)}"
           data-protected="${fav ? "1" : "0"}"
           aria-disabled="${fav}"
           title="${fav ? "お気に入りは削除できません" : "削除"}"
@@ -893,10 +899,12 @@ function render() {
   historyDiv.querySelectorAll("[data-fav-id]").forEach(btn => {
     btn.addEventListener("click", () => {
       const id = btn.getAttribute("data-fav-id");
-      const list = loadList();
-      const item = list.find(x => x.id === id);
-      if (!item) return;
-
+      let list;
+      try { list = readHistorySnapshot().items; }
+      catch { showToast("履歴を読み込めません。お気に入りは変更していません。", "error"); return; }
+      const matches = list.filter(item => String(item.id) === id);
+      if (matches.length !== 1) { showToast("履歴を1件に特定できません。バックアップから復元し直してください。", "error"); return; }
+      const item = matches[0];
       item.favorite = !item.favorite;
       if (!writeHistoryList(list)) return;
       render();
@@ -907,13 +915,23 @@ function render() {
   // 削除（お気に入りは無視）
   historyDiv.querySelectorAll('button[data-del-id]').forEach(btn => {
     btn.addEventListener("click", () => {
-      if (btn.dataset.protected === "1") {
-        showToast("★お気に入りは削除できません", "error");
-        return;
-      }
-
       const id = btn.dataset.delId;
-      const next = loadList().filter(x => x.id !== id);
+      let current;
+      try { current = readHistorySnapshot(); }
+      catch { showToast("履歴を読み込めません。削除していません。", "error"); return; }
+      const matches = current.items.map((item, index) => ({item, index})).filter(({item}) => String(item.id) === id);
+      const shown = all.filter(item => String(item.id) === id);
+      if (matches.length !== 1 || shown.length !== 1) {
+        showToast("履歴を1件に特定できません。バックアップから復元し直してください。", "error"); return;
+      }
+      if (matches[0].item.favorite) { render(); showToast("★お気に入りは削除できません", "error"); return; }
+      if (JSON.stringify(matches[0].item) !== JSON.stringify(shown[0])) {
+        render(); showToast("履歴が別の画面で変わりました。読み直してから削除してください。", "info"); return;
+      }
+      const next = current.items.filter((_, index) => index !== matches[0].index);
+      try {
+        if (localStorage.getItem(KEY) !== current.raw) { render(); showToast("履歴が変わりました。もう一度確認してください。", "info"); return; }
+      } catch { showToast("履歴を読み込めません。削除していません。", "error"); return; }
       if (!writeHistoryList(next)) return;
       render();
       showToast("削除しました", "error");
@@ -956,8 +974,12 @@ function render() {
   // 「使う」は新規記録用のコピー。「編集」は元の履歴を更新します。
   historyDiv.querySelectorAll('button[data-load-id]').forEach(btn => {
     btn.addEventListener("click", () => {
-      const item = loadList().find(x => x.id === btn.dataset.loadId);
-      if (!item) return;
+      let items;
+      try { items = readHistorySnapshot().items; }
+      catch { showToast("履歴を読み込めませんでした。入力内容は変更していません。", "error"); return; }
+      const matches = items.filter(item => String(item.id) === btn.dataset.loadId);
+      if (matches.length !== 1) { showToast("履歴を1件に特定できません。バックアップから復元し直してください。", "error"); return; }
+      const item = matches[0];
       if (typeof HistoryEditor !== "undefined" && !HistoryEditor.beforeNew()) return;
       fillEditor(item);
       showToast("読み込みました", "rode");
@@ -1013,13 +1035,35 @@ function safeParseJSON(text){
   catch { return null; }
 }
 
-// v1 item / v2 item / 旧形式 をそれっぽく受け止めて、アプリの item 形式に寄せる
+// IDs are internal references. Preserve valid older IDs without accepting markup.
+function normalizeRecordId(value) {
+  if (typeof value === "number" && Number.isFinite(value)) value = String(value);
+  return typeof value === "string" && /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/.test(value) ? value : "";
+}
+function newRecordId() { return String(Date.now()) + "-" + Math.random().toString(16).slice(2); }
+function normalizeHistoryIds(items, existing = []) {
+  const reserved = new Set([...existing, ...items].map(item => normalizeRecordId(item.id)).filter(Boolean));
+  const used = new Set(existing.map(item => normalizeRecordId(item.id)).filter(Boolean));
+  const nextSuffix = new Map();
+  return items.map(item => {
+    let id = normalizeRecordId(item.id) || newRecordId();
+    if (used.has(id) || reserved.has(id) && !normalizeRecordId(item.id)) {
+      const base = id.slice(0, 100); let suffix = nextSuffix.get(base) || 1;
+      do { id = base + "-restored-" + suffix++; } while (used.has(id) || reserved.has(id));
+      nextSuffix.set(base, suffix);
+    }
+    used.add(id);
+    return item.id === id ? item : {...item, id};
+  });
+}
+
+// v1 item / v2 item / 旧形式 を、アプリの item 形式に寄せる
 function normalizeItem(x){
-  if (!x || typeof x !== "object") return null;
+  if (!x || typeof x !== "object" || Array.isArray(x)) return null;
 
   const item = { ...x };
 
-  if (!item.id) item.id = String(Date.now()) + "-" + Math.random().toString(16).slice(2);
+  item.id = normalizeRecordId(item.id) || newRecordId();
   item.favorite = !!item.favorite;
 
   if (Array.isArray(item.holes)) {
@@ -1051,7 +1095,7 @@ function normalizeItem(x){
 // payload から items/ui/meta を取り出す（新形式・旧形式どっちも対応）
 function parseBackupPayload(obj){
   if (obj && typeof obj === "object" && Array.isArray(obj.items)) {
-    const items = obj.items.map(normalizeItem).filter(Boolean);
+    const items = normalizeHistoryIds(obj.items.map(normalizeItem).filter(Boolean));
     const ui = (obj.ui && typeof obj.ui === "object") ? obj.ui : null;
     const meta = {
       app: obj.app || "",
@@ -1063,7 +1107,7 @@ function parseBackupPayload(obj){
   }
 
   if (Array.isArray(obj)) {
-    const items = obj.map(normalizeItem).filter(Boolean);
+    const items = normalizeHistoryIds(obj.map(normalizeItem).filter(Boolean));
     return { items, ui: null, meta: { app:"", dataVersion:0, exportedAt:"", env:"" } };
   }
 
@@ -1139,7 +1183,13 @@ function summarizeItems(items){
 
 // ===== バックアップ（エクスポート）=====
 function exportBackup() {
-  const items = loadList();
+  let items;
+  try { items = readHistorySnapshot().items; }
+  catch {
+    historyStorageNotice("履歴を読み込めないため、通常のバックアップは書き出していません。「元データを退避」から元の内容を保存してください。");
+    showToast("バックアップを書き出せませんでした。元の履歴は変更していません。", "error");
+    return;
+  }
 
   let ui = {};
   try { ui = JSON.parse(localStorage.getItem(UI_KEY) || "{}"); } catch {}
@@ -1501,17 +1551,9 @@ const MenuControls = {};
   });
 
   function mergeItems(existing, incoming){
-    const byId = new Map(existing.map(x => [x.id, x]));
-    const out = [...existing];
-
-    for (const it0 of incoming) {
-      let it = it0;
-      if (byId.has(it.id)) {
-        it = { ...it, id: it.id + "-" + Math.random().toString(16).slice(2) };
-      }
-      out.unshift(it);
-      byId.set(it.id, it);
-    }
+    // Explicit restoration repairs references without dropping any records or unknown fields.
+    const out = normalizeHistoryIds(existing);
+    for (const item of normalizeHistoryIds(incoming, out)) out.unshift(item);
     return out;
   }
 
