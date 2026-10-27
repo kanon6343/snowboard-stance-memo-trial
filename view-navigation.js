@@ -53,8 +53,8 @@ const ViewNavigation = (() => {
     if(blocked()||current()!==start.view)return;
     const dx=point.clientX-start.x,dy=point.clientY-start.y,speed=event.timeStamp-start.time<100?start.speed:0;
     if(Math.abs(dx)<Math.abs(dy)*1.6||(start.view==='input'?dx>=0:dx<=0))return;
-    const distance=Math.abs(dx),fast=distance>=36&&Math.abs(speed)>=.5&&Math.sign(speed)===Math.sign(dx);
-    if(distance<Math.min(76,window.innerWidth*.2)&&!fast)return;
+    const distance=Math.abs(dx),fast=distance>=24&&Math.abs(speed)>=.4&&Math.sign(speed)===Math.sign(dx);
+    if(distance<Math.min(40,window.innerWidth*.12)&&!fast)return;
     const next=start.view==='input'?'history':'input';positions[start.view]=start.scroll;
     showView(next);window.scrollTo({top:positions[next],left:0,behavior:'auto'});
     byId(next==='input'?'inputTab':'historyTab').focus({preventScroll:true});

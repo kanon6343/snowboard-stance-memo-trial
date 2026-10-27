@@ -1,7 +1,7 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1084';
-const APP_VERSION = '2.3.2';
-const RELEASE_NOTES = ["メニューを開くスワイプの開始範囲を、画面端から少し内側まで広げました。","左右どちらのメニュー配置にも対応しています。","入力欄・ビス位置のタップと縦スクロールを優先し、入力と履歴の切り替えとの重なりも調整しました。"];
+const RELEASE = '1085';
+const APP_VERSION = '2.3.3';
+const RELEASE_NOTES = ["入力と保存履歴を、短めのスワイプでも切り替えやすくしました。","メニューの「探す」は、見出し・背景を含む画面全体から閉じる方向へスワイプできます。入力欄は入力を優先します。","「表示」「データ」の本文ではタブ切り替えを維持し、見出しや背景からは閉じられます。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
