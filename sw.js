@@ -1,7 +1,7 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1082';
-const APP_VERSION = '2.3.0';
-const RELEASE_NOTES = ["メニューの「データ」で、更新内容を折りたたんで確認できるようにしました。","更新待ちの版に説明がある場合は、更新する前にも変更点を確認できます。","更新後も、このバージョンの変更点をいつでも見返せます。","表示確認用の更新です。保存履歴や入力項目は変更していません。"];
+const RELEASE = '1083';
+const APP_VERSION = '2.3.1';
+const RELEASE_NOTES = ["更新する前に「更新内容を見る」を開けることを確認するためのテストパッチです。","保存履歴・入力項目・設定値は変更していません。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
