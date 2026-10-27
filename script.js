@@ -1248,6 +1248,8 @@ const MenuControls = {};
   let dragFrame = 0;
   let suppressSwipeClickUntil = 0;
   let returnFocus = null;
+  const touchOpening = "ontouchstart" in window;
+  const openingEdgeWidth = () => Math.min(72, window.innerWidth * 0.2);
   try {
     if (localStorage.getItem(sideKey) === "right") menuSide = "right";
   } catch {}
@@ -1308,7 +1310,7 @@ const MenuControls = {};
     panel.style.removeProperty("transform");
     overlay.style.removeProperty("opacity");
   }
-  if (typeof MenuControls !== "undefined") Object.assign(MenuControls, {open,close,returnFocus:()=>returnFocus,restoreReturnFocus:element=>{returnFocus=element;}});
+  if (typeof MenuControls !== "undefined") Object.assign(MenuControls, {open,close,openingEdgeWidth,returnFocus:()=>returnFocus,restoreReturnFocus:element=>{returnFocus=element;}});
 
   function paintSwipe() {
     dragFrame = 0;
@@ -1340,16 +1342,18 @@ const MenuControls = {};
     if (nextOpen) open();
     else close();
     try {
-      if (panel.hasPointerCapture?.(start.id)) panel.releasePointerCapture(start.id);
+      if (start.kind === "pointer" && panel.hasPointerCapture?.(start.id)) panel.releasePointerCapture(start.id);
     } catch {}
   }
 
   // Decide the axis first, then follow the finger instead of waiting for release.
-  document.addEventListener("pointerdown", event => {
+  function beginOpening(event, kind = "pointer") {
     suppressSwipeClickUntil = 0;
     if (swipe) finishSwipe(true);
     if (event.pointerType === "mouse" && event.button !== 0) return;
     if (!event.isPrimary) return;
+    if (document.documentElement?.dataset.tutorialActive === "true" || document.querySelector?.("dialog[open]")) return;
+    if (window.getSelection?.()?.toString()) return;
     const isOpen = panel.classList.contains("open");
     // Touch dismissal uses the reference-style handlers below, not pointer capture.
     // Prototype: body pages own navigation; the bottom handle owns dismissal.
@@ -1358,19 +1362,24 @@ const MenuControls = {};
     const onControl = event.target.closest("input, textarea, select, button, a, summary");
     const onMenuButton = btn.contains(event.target);
     if (!isOpen && onControl && !onMenuButton) return;
-    const atEdge = menuSide === "left" ? event.clientX <= 24 : event.clientX >= window.innerWidth - 24;
+    const edgeWidth = openingEdgeWidth();
+    const atEdge = menuSide === "left" ? event.clientX <= edgeWidth : event.clientX >= window.innerWidth - edgeWidth;
     if (!isOpen && !atEdge && !onMenuButton) return;
     if (event.target.closest("input[type='range'], textarea, [contenteditable='true']")) return;
+    if (event.pointerType === "mouse" && !onMenuButton && event.target.closest("p, span, strong, h1, h2, h3, h4, label")) return;
+    if (typeof getComputedStyle === "function") for (let node = event.target; node && node !== document.body; node = node.parentElement) {
+      if (node.scrollWidth > node.clientWidth + 2 && /auto|scroll/.test(getComputedStyle(node).overflowX)) return;
+    }
     if (event.pointerType === "mouse" && !onControl) event.preventDefault();
     const width = panel.getBoundingClientRect().width;
     swipe = {
-      id: event.pointerId, x: event.clientX, y: event.clientY,
+      kind, id: event.pointerId, x: event.clientX, y: event.clientY,
       lastX: event.clientX, lastTime: event.timeStamp,
       isOpen, width, progress: isOpen ? 1 : 0, velocity: 0, locked: false,
     };
-  });
+  }
 
-  document.addEventListener("pointermove", event => {
+  function moveOpening(event) {
     const start = swipe;
     if (!start || start.id !== event.pointerId) return;
     const dx = event.clientX - start.x;
@@ -1387,7 +1396,7 @@ const MenuControls = {};
       overlay.hidden = false;
       panel.classList.add("is-dragging");
       document.body.classList.add("menu-dragging");
-      try { panel.setPointerCapture(event.pointerId); } catch {}
+      if (start.kind === "pointer") try { panel.setPointerCapture(event.pointerId); } catch {}
     }
     if (event.cancelable) event.preventDefault();
     const dt = Math.max(1, event.timeStamp - start.lastTime);
@@ -1397,16 +1406,45 @@ const MenuControls = {};
     start.lastTime = event.timeStamp;
     start.progress = Math.max(0, Math.min(1, (start.isOpen ? 1 : 0) + direction * dx / start.width));
     if (!dragFrame) dragFrame = requestAnimationFrame(paintSwipe);
-  }, { passive: false });
+  }
+
+  document.addEventListener("pointerdown", event => {
+    if (touchOpening && event.pointerType === "touch") return;
+    beginOpening(event);
+  });
+  document.addEventListener("pointermove", event => {
+    if (swipe?.kind === "pointer") moveOpening(event);
+  }, {passive: false});
   document.addEventListener("pointerup", event => {
-    if (swipe?.id === event.pointerId) finishSwipe(false, event);
+    if (swipe?.kind === "pointer" && swipe.id === event.pointerId) finishSwipe(false, event);
   });
   document.addEventListener("pointercancel", event => {
-    if (swipe?.id === event.pointerId) finishSwipe(true, event);
-  }, { passive: true });
+    if (swipe?.kind === "pointer" && swipe.id === event.pointerId) finishSwipe(true, event);
+  }, {passive: true});
+  if (touchOpening) {
+    const pointEvent = (event, point) => ({target:event.target,pointerType:'touch',button:0,isPrimary:true,pointerId:point.identifier,clientX:point.clientX,clientY:point.clientY,timeStamp:event.timeStamp,cancelable:event.cancelable,preventDefault:()=>event.preventDefault()});
+    document.addEventListener('touchstart', event => {
+      if (event.touches.length !== 1) { if (swipe?.kind === 'touch') finishSwipe(true, event); return; }
+      beginOpening(pointEvent(event, event.touches[0]), 'touch');
+    }, {passive: true});
+    document.addEventListener('touchmove', event => {
+      if (swipe?.kind !== 'touch') return;
+      if (event.touches.length !== 1 || !event.cancelable) { finishSwipe(true, event); return; }
+      const point = Array.from(event.touches).find(point => point.identifier === swipe.id);
+      if (point) moveOpening(pointEvent(event, point));
+    }, {passive: false});
+    document.addEventListener('touchend', event => {
+      if (swipe?.kind !== 'touch') return;
+      const point = Array.from(event.changedTouches).find(point => point.identifier === swipe.id);
+      if (!point) return;
+      if (swipe.locked && event.cancelable) event.preventDefault();
+      finishSwipe(event.touches.length !== 0, pointEvent(event, point));
+    }, {passive: false});
+    document.addEventListener('touchcancel', event => { if (swipe?.kind === 'touch') finishSwipe(true, event); }, {passive: true});
+  }
   // A child losing implicit touch capture during transfer is not panel loss.
   panel.addEventListener("lostpointercapture", event => {
-    if (event.target === panel && swipe?.id === event.pointerId) finishSwipe(true);
+    if (event.target === panel && swipe?.kind === "pointer" && swipe.id === event.pointerId) finishSwipe(true);
   });
   window.addEventListener("blur", () => { closeTouch = null; finishSwipe(true); });
   window.addEventListener("resize", () => { closeTouch = null; finishSwipe(true); });

@@ -1,7 +1,7 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1083';
-const APP_VERSION = '2.3.1';
-const RELEASE_NOTES = ["更新する前に「更新内容を見る」を開けることを確認するためのテストパッチです。","保存履歴・入力項目・設定値は変更していません。"];
+const RELEASE = '1084';
+const APP_VERSION = '2.3.2';
+const RELEASE_NOTES = ["メニューを開くスワイプの開始範囲を、画面端から少し内側まで広げました。","左右どちらのメニュー配置にも対応しています。","入力欄・ビス位置のタップと縦スクロールを優先し、入力と履歴の切り替えとの重なりも調整しました。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;

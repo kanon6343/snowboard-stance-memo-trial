@@ -33,7 +33,7 @@ const ThumbMenu = (() => {
   }
   function updateLayout(){
     for(const key of ThumbMenuGesture.order(side()))tabs.appendChild(byId('menuTab'+suffix[key]));
-    byId('menuGestureHelp').textContent=`本文の左右スワイプで切り替えます。「探す」で${side()==='right'?'右':'左'}へ払うと閉じます。縦はスクロール。通常は探すから開きます。`;
+    byId('menuGestureHelp').textContent=`画面の端寄りの余白か☰からメニューを引き出せます。本文の左右スワイプで切り替えます。「探す」で${side()==='right'?'右':'左'}へ払うと閉じます。縦はスクロール。通常は探すから開きます。`;
     syncStatus();
   }
   function cleanup(){
