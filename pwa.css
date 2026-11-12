@@ -6,6 +6,7 @@
 #menuPanel #appInstallCard [hidden]{ display: none !important; }
 #menuPanel .app-share-actions{ display: flex; flex-wrap: wrap; gap: 8px; }
 #menuPanel .app-share-actions .menu-action{ flex: 1 1 8rem; min-height: 48px; margin: 0; }
+#menuPanel #copyAppLinkBtn{ text-align: center; }
 #menuPanel .app-share-actions .app-share-icon{
   display: grid;
   place-items: center;

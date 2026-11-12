@@ -1,7 +1,7 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1088';
-const APP_VERSION = '2.4.1';
-const RELEASE_NOTES = ["バックアップ下の共有ボタンを正方形のアイコンにして、「リンクをコピー」を横に広くしました。"];
+const RELEASE = '1089';
+const APP_VERSION = '2.4.2';
+const RELEASE_NOTES = ["「リンクをコピー」の文字をボタンの中央に揃えました。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
