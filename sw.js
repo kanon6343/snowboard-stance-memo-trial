@@ -1,7 +1,7 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1085';
-const APP_VERSION = '2.3.3';
-const RELEASE_NOTES = ["入力と保存履歴を、短めのスワイプでも切り替えやすくしました。","メニューの「探す」は、見出し・背景を含む画面全体から閉じる方向へスワイプできます。入力欄は入力を優先します。","「表示」「データ」の本文ではタブ切り替えを維持し、見出しや背景からは閉じられます。"];
+const RELEASE = '1087';
+const APP_VERSION = '2.4.0';
+const RELEASE_NOTES = ["「データ」のバックアップの下から、正式版のリンクを共有・コピーできるようにしました。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
