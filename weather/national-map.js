@@ -41,12 +41,12 @@
     root.append(picksBox);
     const board=make('div','national-map-board');board.setAttribute('role','group');board.setAttribute('aria-label','スキー場の簡易位置図。数字のボタンから周辺の場所を選べます。');
     const land=svg('svg',{viewBox:'0 0 700 780','aria-hidden':'true',focusable:'false',class:'japan-outline'});for(const d of window.HaruJapanOutline||[])land.append(svg('path',{d}));
-    for(const [label,x,y]of[['北海道',570,75],['東北',520,320],['関東',475,525],['中部',350,440],['近畿',300,565],['中国',160,510],['四国',215,625],['九州',75,690]]){const t=svg('text',{x,y});t.textContent=label;land.append(t);}board.append(land);
+    for(const [label,x,y]of[['北海道',553,92],['東北',529,346],['関東',480,539],['中部',342,465],['近畿',284,586],['中国',161,525],['四国',221,672],['九州',42,720]]){const t=svg('text',{x,y});t.textContent=label;land.append(t);}board.append(land);
     for(const c of clusters){const count=c.items.length,hotCount=c.items.filter(r=>hot.has(r.resort.id)).length,available=c.items.some(r=>r.day?.valid&&recent(r)),selected=c===group,b=button(String(count),'map-group',c.items[0].resort.id,'map-location'+(hotCount?' is-hot':available?'':' is-unknown')+(selected?' is-selected':''));
       if(Math.hypot(c.px-c.x,c.py-c.y)>4){land.append(svg('line',{x1:c.x,y1:c.y,x2:c.px,y2:c.py,class:'map-leader'}),svg('circle',{cx:c.x,cy:c.y,r:4,class:'map-anchor'}));}
       b.style.left=c.px/700*100+'%';b.style.top=c.py/780*100+'%';b.setAttribute('aria-pressed',String(selected));b.setAttribute('aria-label',[...new Set(c.items.map(r=>r.resort.region))].join('・')+'付近、'+count+'地点'+(hotCount?'、激アツ候補'+hotCount+'か所':'')+'を選ぶ');if(hotCount)b.append(make('span','map-fire','🔥'));board.append(b);
     }
-    root.append(board);const legend=make('div','national-map-legend');for(const [cls,text]of[['hot','激アツ候補あり'],['normal','予報あり'],['unknown','古い・未取得']]){const n=make('span');n.append(make('i',cls),document.createTextNode(text));legend.append(n);}root.append(legend,make('p','map-locator-note','数字は周辺の地点数です。押すとゲレンデを選べます。主要部のデフォルメ図で、ピンは押しやすい位置へ調整しています。'));
+    root.append(board);const legend=make('div','national-map-legend');for(const [cls,text]of[['hot','激アツ候補あり'],['normal','予報あり'],['unknown','古い・未取得']]){const n=make('span');n.append(make('i',cls),document.createTextNode(text));legend.append(n);}root.append(legend,make('p','map-locator-note','数字は周辺の地点数です。押すとゲレンデを選べます。海岸線の細かな凹凸を省いた地図です。ピンは押しやすい位置へ調整し、元の概略位置と線で結んでいます。'));
     const choices=make('section','map-nearby-choices');choices.append(make('h3','','この付近のゲレンデ'));const choiceButtons=make('div','map-member-buttons');
     for(const r of group.items){const b=button((hot.has(r.resort.id)?'🔥 ':'')+r.resort.name,'map-select',r.resort.id);b.setAttribute('aria-pressed',String(r.resort.id===focused.resort.id));choiceButtons.append(b);}choices.append(choiceButtons);root.append(choices);
     const r=focused,d=r.day,card=make('article','map-selected-place'),head=make('div','map-selected-head'),name=make('div');card.id='map-selected-'+r.resort.id;card.tabIndex=-1;name.append(make('small','',r.resort.region+' · 標高'+r.resort.elevation+'m付近'),make('h3','',r.resort.name));
@@ -61,7 +61,7 @@
     card.append(button('この場所の詳細を見る','detail',r.resort.id,'map-detail-button'));root.append(card);
     const all=make('details','map-all-places');all.append(make('summary','','名前から選ぶ · '+ctx.entries.length+'地点'));const names=make('div','map-member-buttons');for(const entry of ctx.entries){const b=button(entry.resort.name,'map-select',entry.resort.id);b.setAttribute('aria-pressed',String(entry.resort.id===r.resort.id));names.append(b);}all.append(names);root.append(all);
     root.append(make('p','map-locator-note','激アツ候補は、新雪・雲・風・雨の独自比較で75点以上の上位3地点。取得から6時間以上前・未取得・強風や雷雨などの予報は対象外です。営業中・雪質・滑走の安全性を保証する表示ではありません。'));
-    root.append(make('p','map-credit','対応24地点のデフォルメ図です。地方名や距離は目安として見てください。'));return root;
+    const credit=make('a','map-credit','地図データ：Natural Earth（海岸線を簡略化）');credit.href='https://www.naturalearthdata.com/about/terms-of-use/';credit.target='_blank';credit.rel='noopener noreferrer';root.append(credit);return root;
   }
   window.HaruWeatherMap={render,groups,project,hotCandidates};
 })();

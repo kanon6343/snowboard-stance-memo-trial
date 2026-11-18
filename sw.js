@@ -1,7 +1,7 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1098';
-const APP_VERSION = '2.9.0';
-const RELEASE_NOTES = ["24地点をデフォルメした全国マップで見られるようにしました。近接する場所は数字のピンを押して選べます。","予報から選んだ激アツ候補をオレンジでハイライトします。日付・エリア・好みを切り替え、選ばれた理由から詳細へ進めます。"];
+const RELEASE = '1099';
+const APP_VERSION = '2.9.1';
+const RELEASE_NOTES = ["全国マップを実際の海岸線に近い形へ変更しました。細かな凹凸だけを省き、島の形と位置関係を保っています。","ゲレンデのピン・激アツ候補・エリア選択はそのまま利用できます。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
