@@ -1,11 +1,13 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1092';
-const APP_VERSION = '2.5.0';
-const RELEASE_NOTES = ["メニューの「表示」から、19地点・7日間の雪山の天気を比較できるようにしました。","日付・エリア・新雪重視／晴れ重視で、おすすめ候補と理由を表示します。お気に入りや前回の予報表示にも対応しました。"];
+const RELEASE = '1093';
+const APP_VERSION = '2.5.1';
+const RELEASE_NOTES = ["天気画面に、行くエリアが決まっている時の画面案を3つ追加しました。","エリア一覧・横並び比較・スポット詳細を、同じ架空のサンプルで試せます。今の天気画面も引き続き使えます。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
 const SHELL = [
+  'weather-design-lab/index.html', `weather-design-lab/style.css?v=${RELEASE}`,
+  `weather-design-lab/samples.js?v=${RELEASE}`, `weather-design-lab/app.js?v=${RELEASE}`,
   'weather/index.html', `weather/weather.css?v=${RELEASE}`,
   `weather/engine.js?v=${RELEASE}`, `weather/app.js?v=${RELEASE}`, 'weather/resorts.json',
   'index.html', `style.css?v=${RELEASE}`, `outdoor.css?v=${RELEASE}`,
@@ -52,7 +54,8 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
   if (request.method !== 'GET' || url.origin !== BASE.origin || !url.pathname.startsWith(BASE.pathname)) return;
   const page = request.mode === 'navigate' ? (url.pathname === BASE.pathname || url.pathname === new URL('index.html', BASE).pathname) ? 'index.html'
-    : (url.pathname === new URL('weather/', BASE).pathname || url.pathname === new URL('weather/index.html', BASE).pathname) ? 'weather/index.html' : null : null;
+    : (url.pathname === new URL('weather/', BASE).pathname || url.pathname === new URL('weather/index.html', BASE).pathname) ? 'weather/index.html'
+    : (url.pathname === new URL('weather-design-lab/', BASE).pathname || url.pathname === new URL('weather-design-lab/index.html', BASE).pathname) ? 'weather-design-lab/index.html' : null : null;
   const navigation = page !== null;
   if (!navigation && !SHELL_URLS.has(url.href)) return;
   event.respondWith((async () => {

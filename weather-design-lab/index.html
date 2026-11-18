@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#075579"><title>雪山の天気 · 3つの画面案</title>
+<meta name="description" content="エリアが決まっている時の天気画面を、一覧・比較・スポット詳細の3案で試せます。数値は架空のサンプルです。">
+<link rel="icon" href="../icons/icon-trial-192.png" type="image/png"><link rel="stylesheet" href="style.css?v=1093">
+<script src="../theme.js?v=1093"></script><script src="../weather/engine.js?v=1093" defer></script>
+<script src="samples.js?v=1093" defer></script><script src="app.js?v=1093" defer></script>
+</head><body>
+<a class="skip" href="#designPanel">画面案へ</a>
+<header class="head"><a class="back" href="../weather/" aria-label="今の天気画面へ戻る"><span aria-hidden="true">‹</span> 天気</a><div><h1>天気の画面案</h1><small>はるくん試作 · 3つを切り替え</small></div><span class="sample-tag">SAMPLE</span></header>
+<main>
+<p class="sample-notice"><strong>画面を比べるためのサンプル</strong><span>数値は架空の予報です。実際の天気ではありません。</span></p>
+<section class="area-control" aria-label="行くエリア"><label for="area">行くエリア</label><select id="area"><option value="hakuba">白馬エリア</option><option value="yuzawa">湯沢・南魚沼エリア</option><option value="okumino">奥美濃エリア</option><option value="niseko">ニセコ・ルスツエリア</option></select></section>
+<nav class="layout-tabs" role="tablist" aria-label="画面案の切り替え"><button id="tab-list" role="tab" aria-selected="true" aria-controls="designPanel" data-layout="list">① エリア一覧</button><button id="tab-compare" role="tab" aria-selected="false" aria-controls="designPanel" tabindex="-1" data-layout="compare">② 横並び比較</button><button id="tab-spot" role="tab" aria-selected="false" aria-controls="designPanel" tabindex="-1" data-layout="spot">③ スポット詳細</button></nav>
+<section class="design-description"><div><span id="designNumber">案 01</span><h2 id="designTitle">エリア一覧</h2></div><p id="designLead">行くエリアの中で、どこにするか比べる。</p></section>
+<div id="dateControls" class="date-controls"><p class="control-label">滑る日</p><div id="dates" class="dates" role="group" aria-label="滑る日を選ぶ"></div></div>
+<p id="interactionStatus" class="interaction-status" role="status" aria-live="polite"></p>
+<div id="designPanel" role="tabpanel" aria-labelledby="tab-list"></div>
+<details class="design-notes"><summary>3案の違い</summary><dl><dt>① エリア一覧</dt><dd>少ないスクロールで複数の場所を見比べる。気になる行だけ開いて確認。</dd><dt>② 横並び比較</dt><dd>候補を2〜3か所に絞り、同じ項目を横一列で比較。</dd><dt>③ スポット詳細</dt><dd>行く場所を中心に、1週間や時間帯の変化を確認。</dd></dl></details>
+<footer><a href="../weather/">今の天気画面に戻る</a><p>画面案だけの試作です。保存履歴や実際の予報データは変更しません。</p></footer>
+<noscript><p>画面案を切り替えるにはJavaScriptを有効にしてください。</p></noscript>
+</main></body></html>
