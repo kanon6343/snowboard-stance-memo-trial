@@ -1,11 +1,12 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1093';
-const APP_VERSION = '2.5.1';
-const RELEASE_NOTES = ["天気画面に、行くエリアが決まっている時の画面案を3つ追加しました。","エリア一覧・横並び比較・スポット詳細を、同じ架空のサンプルで試せます。今の天気画面も引き続き使えます。"];
+const RELEASE = '1094';
+const APP_VERSION = '2.6.0';
+const RELEASE_NOTES = ["実際の天気予報を、エリア一覧・横並び比較・スポット詳細の3表示で使えるようにしました。","エリアを選ぶと一覧を中心に表示し、比較や詳細へ進めます。日付・お気に入り・予報の取得時刻も引き継ぎます。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
 const SHELL = [
+  `weather/views.css?v=${RELEASE}`, `weather/views.js?v=${RELEASE}`,
   'weather-design-lab/index.html', `weather-design-lab/style.css?v=${RELEASE}`,
   `weather-design-lab/samples.js?v=${RELEASE}`, `weather-design-lab/app.js?v=${RELEASE}`,
   'weather/index.html', `weather/weather.css?v=${RELEASE}`,
