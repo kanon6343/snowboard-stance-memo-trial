@@ -55,5 +55,5 @@
     const others=ctx.entries.filter(r=>r.resort.id!==s.id).sort((a,b)=>Number(b.resort.region===s.region)-Number(a.resort.region===s.region)).slice(0,3);
     if(others.length){const nearby=make('section','nearby');nearby.append(make('h3','',others.every(r=>r.resort.region===s.region)?'同じ地域のほかの場所':'ほかのスキー場'));const list=make('div','nearby-list');for(const r of others){const value=getDay(r,ctx.date),b=button('','spot',r.resort.id,'nearby-row'),right=make('span');right.append(wx(value.code),make('strong','',E.format(value.snow,1)+'cm'),make('small','',E.format(value.wind,1)+'m/s'),make('span','','›'));b.append(make('strong','',r.resort.name),right);list.append(b);}nearby.append(list);root.append(nearby);}return root;
   }
-  window.HaruWeatherViews={render:ctx=>ctx.layout==='compare'?compare(ctx):ctx.layout==='spot'?spot(ctx):list(ctx)};
+  window.HaruWeatherViews={render:ctx=>ctx.layout==='map'?window.HaruWeatherMap.render(ctx):ctx.layout==='compare'?compare(ctx):ctx.layout==='spot'?spot(ctx):list(ctx)};
 })();

@@ -4,7 +4,7 @@
   const E = window.HaruWeather, byId = id => document.getElementById(id);
   const KEY = 'haru-detail:mountain-weather-v1', PREF = 'haru-detail:mountain-weather-preferences-v1';
   const VIEW_KEY='haru-detail:mountain-weather-views-v1', V=window.HaruWeatherViews;
-  const layouts=['list','compare','spot'], expanded=new Set();
+  const layouts=['list','map','compare','spot'], expanded=new Set();
   let mapRenderPending=false;
   let view={layout:'list',compared:Object.create(null),focused:Object.create(null)};
   const MODE_LABELS = {balanced:'バランス',snow:'新雪重視',sun:'晴れ重視'};
@@ -103,13 +103,13 @@
     const base=viewRecords(),ranked=E.ranked(base,prefs.date,prefs.mode),byResort=new Map(ranked.map(r=>[r.resort.id,r]));
     const list=prefs.region==='all'&&view.layout==='list'?ranked:base.map(r=>byResort.get(r.resort.id));
     const state=ensureViews(base),discovery=prefs.region==='all'&&view.layout==='list';
-    byId('recommendation').hidden=!discovery;byId('priorities').hidden=!discovery;byId('dateControls').hidden=view.layout==='spot';
+    byId('recommendation').hidden=!discovery;byId('priorities').hidden=!discovery&&view.layout!=='map';byId('dateControls').hidden=view.layout==='spot';
     if(discovery)drawRecommendation(ranked);
     const target=byId('resorts');target.dataset.layout=view.layout;target.setAttribute('aria-labelledby','layout-'+view.layout);target.replaceChildren();
-    byId('resultsTitle').textContent=view.layout==='compare'?'候補を比較':view.layout==='spot'?'スキー場の詳細':prefs.region==='all'?'全国の予報':prefs.region+'の予報';
+    byId('resultsTitle').textContent=view.layout==='map'?(prefs.region==='all'?'全国マップ':prefs.region+'のマップ'):view.layout==='compare'?'候補を比較':view.layout==='spot'?'スキー場の詳細':prefs.region==='all'?'全国の予報':prefs.region+'の予報';
     byId('resultCount').textContent=view.layout==='compare'?state.compared.length+' / '+list.length+'地点':list.length+'地点';
     if(!list.length)target.append(empty(prefs.favoritesOnly?'お気に入りの場所を選ぼう':'表示する場所がありません','一覧の☆で登録すると、お気に入りに絞り込めます。',true));
-    else target.append(V.render({layout:view.layout,entries:list,dates:days,date:prefs.date,...state,expanded,busy,offline,formatTime:nowText,isFavorite:id=>prefs.favorites.includes(id)}));
+    else target.append(V.render({layout:view.layout,entries:list,dates:days,date:prefs.date,mode:prefs.mode,totalLocations:resorts.length,...state,expanded,busy,offline,formatTime:nowText,isFavorite:id=>prefs.favorites.includes(id)}));
     const status=byId('status'),good=list.filter(r=>r.day?.valid),old=good.filter(r=>E.cacheState(r.fetchedAt)==='old'),missing=list.filter(r=>!r.day?.valid);
     if(busy)status.textContent='予報を確認中… '+finished+' / '+total+'地点';
     else if(!records.size)status.textContent=offline?'オフラインです。予報はまだ取得できていません。':'予報を取得できませんでした。通信状態を確認して更新を試してください。';
@@ -161,7 +161,7 @@
   }
   byId('refresh').addEventListener('click',()=>refresh(true));
   byId('layoutTabs').addEventListener('click',event=>setView(event.target.closest('button')?.dataset.view));
-  byId('layoutTabs').addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const i=layouts.indexOf(view.layout),next=event.key==='Home'?0:event.key==='End'?2:(i+(event.key==='ArrowRight'?1:2))%3;setView(layouts[next]);byId('layout-'+view.layout).focus();});
+  byId('layoutTabs').addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const i=layouts.indexOf(view.layout),next=event.key==='Home'?0:event.key==='End'?layouts.length-1:(i+(event.key==='ArrowRight'?1:layouts.length-1))%layouts.length;setView(layouts[next]);byId('layout-'+view.layout).focus();});
   byId('dates').addEventListener('click',event=>{const date=event.target.closest('button')?.dataset.date;if(!days.includes(date))return;prefs.date=date;savePrefs();render();});
   byId('region').addEventListener('change',event=>{feedback('');prefs.region=event.target.value;savePrefs();render();});
   byId('priorities').addEventListener('click',event=>{const mode=event.target.closest('button')?.dataset.mode;if(!Object.hasOwn(MODE_LABELS,mode))return;prefs.mode=mode;savePrefs();render();});
@@ -170,7 +170,8 @@
     const target=event.target.closest('button[data-action]');if(!target)return;const {action,id}=target.dataset;feedback('');
     if(action==='date'){if(!days.includes(id))return;prefs.date=id;savePrefs();render();return;}
     if(!viewRecords().some(r=>r.resort.id===id))return;
-    if(action==='expand'){expanded.has(id)?expanded.delete(id):expanded.add(id);render();}
+    if(action==='map-group'||action==='map-select'){view.focused[bucket()]=id;saveViews();render();byId('resorts').querySelector('.map-selected-place')?.scrollIntoView?.({block:'nearest',behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches?'auto':'smooth'});}
+    else if(action==='expand'){expanded.has(id)?expanded.delete(id):expanded.add(id);render();}
     else if(action==='favorite'){prefs.favorites=prefs.favorites.includes(id)?prefs.favorites.filter(v=>v!==id):[...prefs.favorites,id];savePrefs();render();}
     else if(action==='compare')toggleComparison(id);
     else if(action==='detail'||action==='spot'){view.focused[bucket()]=id;if(action==='detail')view.layout='spot';saveViews();render();if(action==='detail'||target.classList.contains('nearby-row'))byId('resorts').querySelector('.spot-card')?.scrollIntoView?.({block:'start',behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches?'auto':'smooth'});}

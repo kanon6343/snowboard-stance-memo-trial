@@ -1,11 +1,12 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1097';
-const APP_VERSION = '2.8.1';
-const RELEASE_NOTES = ["保存済みのゲレンデマップをスポット詳細に常時表示するようにしました。","マップをタップすると全画面で拡大できます。複数ページのPDFは全画面側で切り替えられます。"];
+const RELEASE = '1098';
+const APP_VERSION = '2.9.0';
+const RELEASE_NOTES = ["24地点をデフォルメした全国マップで見られるようにしました。近接する場所は数字のピンを押して選べます。","予報から選んだ激アツ候補をオレンジでハイライトします。日付・エリア・好みを切り替え、選ばれた理由から詳細へ進めます。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
 const SHELL = [
+  `weather/national-map.css?v=${RELEASE}`, `weather/national-map.js?v=${RELEASE}`, `weather/japan-outline.js?v=${RELEASE}`,
   `weather/spot-info.css?v=${RELEASE}`, `weather/spot-info.js?v=${RELEASE}`,
   `weather/map-store.js?v=${RELEASE}`, `weather/map-pdf.js?v=${RELEASE}`, 'weather/spot-catalog.json',
   `weather/views.css?v=${RELEASE}`, `weather/views.js?v=${RELEASE}`,
