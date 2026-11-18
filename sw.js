@@ -1,7 +1,7 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1095';
-const APP_VERSION = '2.7.0';
-const RELEASE_NOTES = ["スポット詳細にコース・リフトの公式掲載情報を追加しました。キロロ・丸沼高原・八方尾根は内訳を表示し、ほかの場所も公式サイトから確認できます。","ゲレンデマップを場所ごとに端末へ保存し、オフラインでも開けるようにしました。公式から取得した画像・PDFを取り込めます。","公式の更新日時と取得時刻を分け、古い掲載や更新日時が不明な情報を明示します。"];
+const RELEASE = '1096';
+const APP_VERSION = '2.8.0';
+const RELEASE_NOTES = ["ゲレンデマップのファイル選択から戻った時に、画像を受け取る前に入力欄が入れ替わる不具合を修正しました。保存結果やエラーも画面の更新で消えなくなります。","奥伊吹・びわ湖バレイ・ジャム勝山・シャルマン火打・石鎚を追加し、天気の対応地点を24か所に増やしました。滋賀・福井・愛媛でも絞り込めます。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;

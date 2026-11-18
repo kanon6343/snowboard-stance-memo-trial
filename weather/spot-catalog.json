@@ -140,6 +140,43 @@
       "courseUrl": "https://daisen-mountain.jp/",
       "mapPage": "https://daisen-mountain.jp/",
       "mapIsPortal": true
+    },
+    {
+      "id": "okuibuki",
+      "mapIsPortal": false,
+      "liftUrl": "https://www.okuibuki.co.jp/gelande/#lift",
+      "courseUrl": "https://www.okuibuki.co.jp/gelande/#lift_info",
+      "mapPage": "https://www.okuibuki.co.jp/gelande/#map",
+      "mapFile": "https://www.okuibuki.co.jp/common/img/map/map.jpg"
+    },
+    {
+      "id": "biwako",
+      "mapIsPortal": false,
+      "liftUrl": "https://www.biwako-valley.com/w_season/openclose/",
+      "courseUrl": "https://www.biwako-valley.com/w_season/openclose/",
+      "mapPage": "https://www.biwako-valley.com/w_season/openclose/"
+    },
+    {
+      "id": "jam-katsuyama",
+      "mapIsPortal": false,
+      "liftUrl": "https://jamresort.jp/activity-white/",
+      "courseUrl": "https://jamresort.jp/activity-white/",
+      "mapPage": "https://jamresort.jp/activity-white/course-guide/",
+      "mapFile": "https://jamresort.jp/wp-content/uploads/2026/06/jam_coursemap.pdf"
+    },
+    {
+      "id": "charmant",
+      "mapIsPortal": false,
+      "liftUrl": "https://charmant-hiuchi.jp/",
+      "courseUrl": "https://charmant-hiuchi.jp/",
+      "mapPage": "https://charmant-hiuchi.jp/gelande/"
+    },
+    {
+      "id": "ishizuchi",
+      "mapIsPortal": false,
+      "liftUrl": "https://www.ishizuchi.com/ski/",
+      "courseUrl": "https://www.ishizuchi.com/ski/",
+      "mapPage": "https://www.ishizuchi.com/ski/course"
     }
   ]
 }

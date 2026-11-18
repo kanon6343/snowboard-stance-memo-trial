@@ -117,6 +117,15 @@
     "official": "https://akakura-ski.com/"
   },
   {
+    "id": "charmant",
+    "name": "シャルマン火打",
+    "region": "新潟",
+    "lat": 37.0005,
+    "lon": 138.0674,
+    "official": "https://charmant-hiuchi.jp/",
+    "elevation": 590
+  },
+  {
     "id": "nozawa",
     "name": "野沢温泉",
     "region": "長野",
@@ -144,6 +153,15 @@
     "official": "https://www.happo-one.jp/"
   },
   {
+    "id": "jam-katsuyama",
+    "name": "JAM福井勝山（旧スキージャム勝山）",
+    "region": "福井",
+    "lat": 36.0711,
+    "lon": 136.5747,
+    "official": "https://jamresort.jp/activity-white/",
+    "elevation": 780
+  },
+  {
     "id": "takasu",
     "name": "高鷲スノーパーク",
     "region": "岐阜",
@@ -151,6 +169,24 @@
     "lon": 136.85,
     "elevation": 1200,
     "official": "https://www.takasu.gr.jp/"
+  },
+  {
+    "id": "okuibuki",
+    "name": "グランスノー奥伊吹",
+    "region": "滋賀",
+    "lat": 35.5211,
+    "lon": 136.3891,
+    "official": "https://www.okuibuki.co.jp/",
+    "elevation": 790
+  },
+  {
+    "id": "biwako",
+    "name": "びわ湖バレイ",
+    "region": "滋賀",
+    "lat": 35.2175,
+    "lon": 135.8883,
+    "official": "https://www.biwako-valley.com/w_season/openclose/",
+    "elevation": 960
   },
   {
     "id": "hachikita",
@@ -169,5 +205,14 @@
     "lon": 133.55,
     "elevation": 900,
     "official": "https://daisen-mountain.jp/"
+  },
+  {
+    "id": "ishizuchi",
+    "name": "石鎚スキー場",
+    "region": "愛媛",
+    "lat": 33.7944,
+    "lon": 133.1311,
+    "official": "https://www.ishizuchi.com/ski/",
+    "elevation": 1280
   }
 ]

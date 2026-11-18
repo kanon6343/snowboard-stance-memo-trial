@@ -7,7 +7,7 @@
   const safeUrl=value=>{try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password?u.href:null;}catch{return null;}};
   const link=(text,url)=>{const a=node('a','info-link',text);a.href=safeUrl(url)||'#';a.target='_blank';a.rel='noopener noreferrer';return a;};
   const stamp=value=>{const t=Date.parse(value);return Number.isFinite(t)?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(t)+' JST':'未確認';};
-  let catalog=null,operations=null,pending=null,current=null,mapDialog=null,lastAttempt=0,loadFailed=false;
+  let catalog=null,operations=null,pending=null,current=null,mapDialog=null,lastAttempt=0,loadFailed=false,picker=null;
   try{const raw=localStorage.getItem(KEY);if(raw&&raw.length<500000)operations=validate(JSON.parse(raw));}catch{}
   function validate(data){
     if(data?.version!==1||!data.resorts||!Number.isFinite(Date.parse(data.generatedAt)))throw Error('形式不正');
@@ -69,6 +69,24 @@
     return new Promise((resolve,reject)=>{const image=new Image(),url=URL.createObjectURL(blob);image.onload=()=>{URL.revokeObjectURL(url);if(!image.naturalWidth||image.naturalWidth*image.naturalHeight>30000000){reject(Error('画像が大きすぎます。3000万画素以下で保存してください。'));return;}resolve([{blob,width:image.naturalWidth,height:image.naturalHeight}]);};image.onerror=()=>{URL.revokeObjectURL(url);reject(Error('画像を読み込めません。別の画像を選んでください。'));};image.src=url;});
   }
   function status(ctx,text){if(ctx.message.isConnected)ctx.message.textContent=text;}
+  function settlePicker(ctx){
+    if(!ctx.picking)return;ctx.picking=false;clearTimeout(ctx.returnTimer);
+    if(picker===ctx)picker=null;
+    window.dispatchEvent(new window.Event('haru-map-picker-settled'));
+  }
+  function beginPicker(ctx){
+    if(ctx.saving||ctx.picking)return;ctx.picking=true;picker=ctx;
+  }
+  function chosenFile(ctx){
+    const file=ctx.input.files?.[0];
+    if(file&&!ctx.saving)void importFile(ctx,file);
+    settlePicker(ctx);
+  }
+  function pickerReturned(){
+    const ctx=picker;if(!ctx?.picking)return;clearTimeout(ctx.returnTimer);
+    // Native change/cancel normally fires first. Older pickers may only restore focus.
+    ctx.returnTimer=setTimeout(()=>{if(ctx.picking)chosenFile(ctx);},1500);
+  }
   async function importFile(ctx,file){
     if(!file||ctx.saving)return;ctx.saving=true;ctx.input.disabled=true;const {resort}=ctx;
     try{
@@ -106,6 +124,8 @@
     }catch(e){if(target.isConnected)target.textContent=e.message;}
   }
   function create(resort,date){
+    // Keep the actual file input and progress/error feedback through forecast refreshes.
+    if(current?.resort.id===resort.id){current.date=date;const ctx=current;queueMicrotask(()=>{drawMap(ctx);load();});return ctx.root;}
     const root=node('section','spot-information');root.dataset.resort=resort.id;
     const operationsBox=node('section','operations-section');operationsBox.append(node('h3','','コース・リフト状況'),node('div','operations-body'));root.append(operationsBox);
     const map=node('section','map-section');map.append(node('h3','','ゲレンデマップ'),node('p','info-small','必要な場所だけ端末に保存。画像・PDFに対応します。'));
@@ -114,8 +134,12 @@
     const help=node('details','map-help');help.append(node('summary','','保存について'));help.append(node('p','info-small','公式マップをダウンロードし、ファイルから取り込んでください。PDFの保存時は通信が必要です。初回は表示機能（約3.5MB）も取得します。ファイルは外部へ送信せず、この端末で画像化します。1ファイル25MB・PDF8ページまで。'));
     help.append(node('p','info-small','保存したマップは履歴のJSONバックアップには含まれません。元ファイルを残してください。ブラウザのデータ削除や空き容量不足で消えることがあります。'));
     help.append(link('PDF表示：Mozilla PDF.js 6.5.438（Apache 2.0）','https://github.com/mozilla/pdf.js/releases/tag/v6.5.438'));map.append(help);root.append(map);
-    const ctx={root,resort,date,input,message,token:0,saving:false};current=ctx;input.addEventListener('change',()=>importFile(ctx,input.files?.[0]));drawOperations(ctx);queueMicrotask(()=>{drawMap(ctx);load();});return root;
+    const ctx={root,resort,date,input,message,token:0,saving:false,picking:false,returnTimer:null};current=ctx;
+    input.addEventListener('click',()=>beginPicker(ctx));input.addEventListener('change',()=>chosenFile(ctx));input.addEventListener('cancel',()=>settlePicker(ctx));
+    drawOperations(ctx);queueMicrotask(()=>{drawMap(ctx);load();});return root;
   }
   window.addEventListener('online',()=>load(true));window.addEventListener('offline',()=>{if(current?.root.isConnected)drawOperations(current);});
-  window.HaruSpotInfo={create,sourceState,validate};
+  window.addEventListener('focus',pickerReturned);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')pickerReturned();});
+  window.HaruSpotInfo={create,sourceState,validate,isPicking:()=>Boolean(picker?.picking)};
 })();

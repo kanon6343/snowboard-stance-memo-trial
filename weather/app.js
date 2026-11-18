@@ -5,6 +5,7 @@
   const KEY = 'haru-detail:mountain-weather-v1', PREF = 'haru-detail:mountain-weather-preferences-v1';
   const VIEW_KEY='haru-detail:mountain-weather-views-v1', V=window.HaruWeatherViews;
   const layouts=['list','compare','spot'], expanded=new Set();
+  let mapRenderPending=false;
   let view={layout:'list',compared:Object.create(null),focused:Object.create(null)};
   const MODE_LABELS = {balanced:'バランス',snow:'新雪重視',sun:'晴れ重視'};
   let resorts = [], records = new Map(), failed = new Set(), busy = false, finished = 0, total = 0, storageFailed = false, offline = !navigator.onLine;
@@ -90,6 +91,10 @@
     target.append(el('p','guide-line','営業状況・リフト運行は未確認です。各スキー場の公式情報へ。'));
   }
   function render() {
+    // Android's native picker restores visibility before delivering its change event.
+    // Replacing the input at that moment can discard the selection entirely.
+    if(window.HaruSpotInfo?.isPicking?.()){mapRenderPending=true;return;}
+    mapRenderPending=false;
     const active=document.activeElement,focusedDate=active?.dataset.date,focusedAction=active?.dataset.action,focusedId=active?.dataset.id;
     drawDates();byId('region').value=prefs.region;
     byId('favoritesOnly').setAttribute('aria-pressed',String(prefs.favoritesOnly));
@@ -171,6 +176,7 @@
     else if(action==='detail'||action==='spot'){view.focused[bucket()]=id;if(action==='detail')view.layout='spot';saveViews();render();if(action==='detail'||target.classList.contains('nearby-row'))byId('resorts').querySelector('.spot-card')?.scrollIntoView?.({block:'start',behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches?'auto':'smooth'});}
   });
   window.addEventListener('offline',()=>{offline=true;render();});
+  window.addEventListener('haru-map-picker-settled',()=>{if(mapRenderPending)render();});
   window.addEventListener('online',()=>{offline=false;refresh();});
   document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){days=E.dateList();refresh();}});
   (async()=>{
