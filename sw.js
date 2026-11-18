@@ -1,11 +1,13 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1094';
-const APP_VERSION = '2.6.0';
-const RELEASE_NOTES = ["実際の天気予報を、エリア一覧・横並び比較・スポット詳細の3表示で使えるようにしました。","エリアを選ぶと一覧を中心に表示し、比較や詳細へ進めます。日付・お気に入り・予報の取得時刻も引き継ぎます。"];
+const RELEASE = '1095';
+const APP_VERSION = '2.7.0';
+const RELEASE_NOTES = ["スポット詳細にコース・リフトの公式掲載情報を追加しました。キロロ・丸沼高原・八方尾根は内訳を表示し、ほかの場所も公式サイトから確認できます。","ゲレンデマップを場所ごとに端末へ保存し、オフラインでも開けるようにしました。公式から取得した画像・PDFを取り込めます。","公式の更新日時と取得時刻を分け、古い掲載や更新日時が不明な情報を明示します。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
 const SHELL = [
+  `weather/spot-info.css?v=${RELEASE}`, `weather/spot-info.js?v=${RELEASE}`,
+  `weather/map-store.js?v=${RELEASE}`, `weather/map-pdf.js?v=${RELEASE}`, 'weather/spot-catalog.json',
   `weather/views.css?v=${RELEASE}`, `weather/views.js?v=${RELEASE}`,
   'weather-design-lab/index.html', `weather-design-lab/style.css?v=${RELEASE}`,
   `weather-design-lab/samples.js?v=${RELEASE}`, `weather-design-lab/app.js?v=${RELEASE}`,

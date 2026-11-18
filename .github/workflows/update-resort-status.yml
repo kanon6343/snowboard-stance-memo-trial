@@ -1,0 +1,52 @@
+name: Official resort status
+on:
+  schedule:
+    - cron: '43 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/collect-resort-status.py
+      - scripts/test-resort-status.py
+      - weather/spot-catalog.json
+      - .github/workflows/update-resort-status.yml
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: official-resort-status
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check parser behavior
+        run: python -B scripts/test-resort-status.py
+      - name: Read supported official pages
+        run: python -B scripts/collect-resort-status.py
+      - name: Save only the public operation snapshot
+        id: save
+        shell: bash
+        run: |
+          if git diff --quiet -- weather/operations.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- weather/operations.json
+          git commit -m "Update official resort operation snapshot"
+          git push origin HEAD:main
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Rebuild Pages after bot push
+        if: steps.save.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"

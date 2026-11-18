@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "checkedAt": "2026-11-19",
+  "resorts": [
+    {
+      "id": "hirafu",
+      "liftUrl": "https://www.grand-hirafu.jp/snow/status/",
+      "courseUrl": "https://www.grand-hirafu.jp/snow/status/",
+      "mapPage": "https://www.grand-hirafu.jp/download/",
+      "mapIsPortal": false,
+      "mapFile": "https://www.grand-hirafu.jp/datas/files/2026/10/07/983fbe900f181d7ff43696aacb99e3d429827cbc.pdf"
+    },
+    {
+      "id": "rusutsu",
+      "liftUrl": "https://rusutsu.com/lift-and-trail-status/",
+      "courseUrl": "https://rusutsu.com/lift-and-trail-status/",
+      "mapPage": "https://rusutsu.com/trail-map/",
+      "mapIsPortal": false
+    },
+    {
+      "id": "kiroro",
+      "liftUrl": "https://www.kiroro.co.jp/ja/guide_map/",
+      "courseUrl": "https://www.kiroro.co.jp/ja/guide_map/",
+      "mapPage": "https://www.kiroro.co.jp/ja/download/",
+      "mapIsPortal": false,
+      "mapFile": "https://www.kiroro.co.jp/wp-content/uploads/2026/10/map_260730_ja2.jpg",
+      "adapter": "kiroro"
+    },
+    {
+      "id": "furano",
+      "liftUrl": "https://www.princehotels.co.jp/ski/furano/winter/coursemap/",
+      "courseUrl": "https://www.princehotels.co.jp/ski/furano/winter/coursemap/",
+      "mapPage": "https://www.princehotels.co.jp/ski/furano/",
+      "mapIsPortal": true
+    },
+    {
+      "id": "hakkoda",
+      "liftUrl": "https://www.hakkoda-ropeway.jp/",
+      "courseUrl": "https://www.hakkoda-ropeway.jp/",
+      "mapPage": "https://www.hakkoda-ropeway.jp/",
+      "mapIsPortal": true
+    },
+    {
+      "id": "appi",
+      "liftUrl": "https://www.appi.co.jp/area/ski/",
+      "courseUrl": "https://www.appi.co.jp/area/ski/",
+      "mapPage": "https://www.appi.co.jp/area/ski/",
+      "mapIsPortal": true
+    },
+    {
+      "id": "zao",
+      "liftUrl": "https://zaomountainresort.com/ropeway-lift-information/",
+      "courseUrl": "https://zaomountainresort.com/",
+      "mapPage": "https://zaomountainresort.com/",
+      "mapIsPortal": true
+    },
+    {
+      "id": "inawashiro",
+      "liftUrl": "https://www.inawashiro-ski.com/",
+      "courseUrl": "https://www.inawashiro-ski.com/",
+      "mapPage": "https://www.inawashiro-ski.com/gelande/",
+      "mapIsPortal": false
+    },
+    {
+      "id": "marunuma",
+      "liftUrl": "https://www.marunuma.jp/winter/status/",
+      "courseUrl": "https://www.marunuma.jp/winter/status/",
+      "mapPage": "https://www.marunuma.jp/winter/course-map/",
+      "mapIsPortal": false,
+      "adapter": "marunuma"
+    },
+    {
+      "id": "kawaba",
+      "liftUrl": "https://www.kawaba.co.jp/",
+      "courseUrl": "https://www.kawaba.co.jp/",
+      "mapPage": "https://www.kawaba.co.jp/",
+      "mapIsPortal": true
+    },
+    {
+      "id": "naeba",
+      "liftUrl": "https://www.princehotels.co.jp/ski/naeba/",
+      "courseUrl": "https://www.princehotels.co.jp/ski/naeba/",
+      "mapPage": "https://www.princehotels.co.jp/ski/naeba/",
+      "mapIsPortal": true
+    },
+    {
+      "id": "gala",
+      "liftUrl": "https://gala.co.jp/winter/",
+      "courseUrl": "https://gala.co.jp/winter/",
+      "mapPage": "https://gala.co.jp/winter/",
+      "mapIsPortal": true
+    },
+    {
+      "id": "akakura",
+      "liftUrl": "https://akakura-ski.com/",
+      "courseUrl": "https://akakura-ski.com/",
+      "mapPage": "https://akakura-ski.com/",
+      "mapIsPortal": true
+    },
+    {
+      "id": "nozawa",
+      "liftUrl": "https://nozawaski.com/winter/lift_price/lift_time/#lift_more",
+      "courseUrl": "https://nozawaski.com/winter/course/",
+      "mapPage": "https://nozawaski.com/winter/course/map/",
+      "mapIsPortal": false
+    },
+    {
+      "id": "shiga",
+      "liftUrl": "https://shigakogen-ski.or.jp/",
+      "courseUrl": "https://shigakogen-ski.or.jp/lift/index.php",
+      "mapPage": "https://shigakogen-ski.or.jp/",
+      "mapIsPortal": true
+    },
+    {
+      "id": "happo",
+      "liftUrl": "https://www.happo-one.jp/gelande/lift/",
+      "courseUrl": "https://www.happo-one.jp/gelande/condition/",
+      "mapPage": "https://www.happo-one.jp/info/pamphlet/",
+      "mapIsPortal": false,
+      "mapFile": "https://www.happo-one.jp/wp2019/wp-content/themes/happo-one2020/img/info/pamphlet/2026-2027/course_map.pdf",
+      "adapter": "happo"
+    },
+    {
+      "id": "takasu",
+      "liftUrl": "https://www.takasu.gr.jp/",
+      "courseUrl": "https://www.takasu.gr.jp/",
+      "mapPage": "https://www.takasu.gr.jp/gelande/",
+      "mapIsPortal": false
+    },
+    {
+      "id": "hachikita",
+      "liftUrl": "https://www.hachi-hachikita.co.jp/",
+      "courseUrl": "https://www.hachi-hachikita.co.jp/",
+      "mapPage": "https://www.hachi-hachikita.co.jp/hachi/slope.html",
+      "mapIsPortal": false
+    },
+    {
+      "id": "daisen",
+      "liftUrl": "https://daisen-mountain.jp/",
+      "courseUrl": "https://daisen-mountain.jp/",
+      "mapPage": "https://daisen-mountain.jp/",
+      "mapIsPortal": true
+    }
+  ]
+}
