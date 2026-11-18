@@ -1,7 +1,7 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1096';
-const APP_VERSION = '2.8.0';
-const RELEASE_NOTES = ["ゲレンデマップのファイル選択から戻った時に、画像を受け取る前に入力欄が入れ替わる不具合を修正しました。保存結果やエラーも画面の更新で消えなくなります。","奥伊吹・びわ湖バレイ・ジャム勝山・シャルマン火打・石鎚を追加し、天気の対応地点を24か所に増やしました。滋賀・福井・愛媛でも絞り込めます。"];
+const RELEASE = '1097';
+const APP_VERSION = '2.8.1';
+const RELEASE_NOTES = ["保存済みのゲレンデマップをスポット詳細に常時表示するようにしました。","マップをタップすると全画面で拡大できます。複数ページのPDFは全画面側で切り替えられます。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;

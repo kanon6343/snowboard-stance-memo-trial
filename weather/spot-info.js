@@ -96,7 +96,7 @@
       const original=file.slice(0,file.size,type),pages=type==='application/pdf'?await window.HaruMapPDF.convert(original,(page,total)=>status(ctx,'マップを画像化中… '+page+' / '+total+'ページ')):await imagePage(original);
       await S.put({id:resort.id,name:String(file.name||'ゲレンデマップ').slice(0,180),savedAt:new Date().toISOString(),type,original,pages});
       status(ctx,resort.name+'のマップをこの端末に保存しました。オフラインでも開けます。');
-      if(current?.resort.id===resort.id)await drawMap(current);
+      if(current?.resort.id===resort.id){current.previewSavedAt=null;await drawMap(current);}
     }catch(e){status(ctx,(e?.message||'保存できませんでした。')+' 元の保存済みマップは変更していません。');}
     finally{ctx.saving=false;ctx.input.disabled=false;ctx.input.value='';}
   }
@@ -116,16 +116,24 @@
   async function drawMap(ctx){
     const target=ctx.root.querySelector('.map-saved');if(!target)return;const token=++ctx.token;
     try{
-      const value=await S.get(ctx.resort.id);if(!target.isConnected||token!==ctx.token)return;target.replaceChildren();
+      const value=await S.get(ctx.resort.id);if(!target.isConnected||token!==ctx.token)return;
+      if(value&&ctx.previewSavedAt===value.savedAt&&target.querySelector('.map-preview'))return;
+      releasePreview(ctx);target.replaceChildren();
       if(!value){target.append(node('p','info-small','まだ保存されていません。必要な場所の画像かPDFだけ追加できます。'));return;}
-      const bytes=value.original.size+value.pages.reduce((n,p)=>n+p.blob.size,0);target.append(node('p','saved-map-name',value.name),node('p','info-small',stamp(value.savedAt)+' 保存 · '+(bytes/1024/1024).toFixed(1)+' MB'));
-      const actions=node('div','info-actions');let open;open=button('保存したマップを見る',()=>showMap(value,ctx.resort,open),'map-open');
-      const remove=button('端末から削除',async()=>{if(!window.confirm(ctx.resort.name+'の保存したマップだけを削除しますか？'))return;try{await S.remove(ctx.resort.id);status(ctx,'保存したマップを削除しました。');await drawMap(ctx);}catch(e){status(ctx,e.message);}},'map-remove');actions.append(open,remove);target.append(actions);
-    }catch(e){if(target.isConnected)target.textContent=e.message;}
+      const bytes=value.original.size+value.pages.reduce((n,p)=>n+p.blob.size,0);let preview;preview=button('',()=>showMap(value,ctx.resort,preview),'map-preview map-open');
+      preview.setAttribute('aria-label',ctx.resort.name+'の保存したマップを全画面で表示');
+      const image=node('img','map-preview-image');image.alt=ctx.resort.name+'の保存したゲレンデマップ';image.decoding='async';
+      ctx.previewUrl=URL.createObjectURL(value.pages[0].blob);ctx.previewSavedAt=value.savedAt;image.src=ctx.previewUrl;
+      preview.append(image,node('span','map-expand-label','⛶ 全画面'));target.append(preview,node('p','map-preview-hint','タップで全画面表示'+(value.pages.length>1?' · 全'+value.pages.length+'ページ':'')),node('p','saved-map-name',value.name),node('p','info-small',stamp(value.savedAt)+' 保存 · '+(bytes/1024/1024).toFixed(1)+' MB'));
+      const actions=node('div','info-actions');
+      const remove=button('端末から削除',async()=>{if(!window.confirm(ctx.resort.name+'の保存したマップだけを削除しますか？'))return;try{await S.remove(ctx.resort.id);status(ctx,'保存したマップを削除しました。');await drawMap(ctx);}catch(e){status(ctx,e.message);}},'map-remove');actions.append(remove);target.append(actions);
+    }catch(e){if(target.isConnected){releasePreview(ctx);target.textContent=e.message;}}
   }
+  function releasePreview(ctx){if(ctx?.previewUrl)URL.revokeObjectURL(ctx.previewUrl);if(ctx){ctx.previewUrl=null;ctx.previewSavedAt=null;}}
   function create(resort,date){
     // Keep the actual file input and progress/error feedback through forecast refreshes.
     if(current?.resort.id===resort.id){current.date=date;const ctx=current;queueMicrotask(()=>{drawMap(ctx);load();});return ctx.root;}
+    releasePreview(current);
     const root=node('section','spot-information');root.dataset.resort=resort.id;
     const operationsBox=node('section','operations-section');operationsBox.append(node('h3','','コース・リフト状況'),node('div','operations-body'));root.append(operationsBox);
     const map=node('section','map-section');map.append(node('h3','','ゲレンデマップ'),node('p','info-small','必要な場所だけ端末に保存。画像・PDFに対応します。'));
