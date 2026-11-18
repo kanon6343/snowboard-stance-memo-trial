@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#075579">
+  <title>雪山の天気 | スタンスメモ 試作</title>
+  <meta name="description" content="スキー場の7日間の天気、新雪、風を比べて、次に滑る場所の候補を探します。">
+  <link rel="icon" href="../icons/icon-trial-192.png" type="image/png">
+  <link rel="stylesheet" href="weather.css?v=1092">
+  <script src="../theme.js?v=1092"></script>
+  <script src="engine.js?v=1092" defer></script>
+  <script src="app.js?v=1092" defer></script>
+</head>
+<body>
+<a class="skip" href="#results">予報一覧へ</a>
+<header class="page-head">
+  <a class="back" href="../" aria-label="スタンスメモへ戻る"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg><span>メモ</span></a>
+  <div><h1>雪山の天気</h1><span class="trial-label">はるくん試作</span></div>
+  <button class="refresh" id="refresh" type="button" aria-label="予報を更新"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6 7a7 7 0 0 1 12-1l2 3M4 15l2 3a7 7 0 0 0 12-1"/></svg></button>
+</header>
+<main>
+  <section class="intro" aria-labelledby="introTitle">
+    <div><p class="eyebrow">NEXT SNOW DAY</p><h2 id="introTitle">次の一本、<br>どこで滑ろう。</h2><p>新雪も、晴れも、風の穏やかさも。</p></div>
+    <svg class="mountains" viewBox="0 0 280 180" aria-hidden="true"><path d="m8 158 91-130 54 73 33-45 87 102Z" fill="#c0dbe6"/><path d="m99 28-35 50 32-10 22 8 8-9Z" fill="#fff"/><path d="m55 166 107-151 110 151Z" fill="#075579"/><path d="m162 15-39 55 28-12 16 12 19-21Z" fill="#fff"/><path d="m160 122 37 20" stroke="#ff8100" stroke-width="13" stroke-linecap="round"/></svg>
+  </section>
+  <section class="controls" aria-label="比較する条件">
+    <div class="date-strip" id="dates" role="group" aria-label="滑る日"></div>
+    <div class="filter-row"><label class="region-label" for="region">エリア<select id="region"><option value="all">すべてのエリア</option></select></label><button id="favoritesOnly" class="favorite-filter" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button></div>
+    <div class="priorities" id="priorities" role="group" aria-label="重視すること"><button type="button" data-mode="balanced" aria-pressed="true">バランス</button><button type="button" data-mode="snow" aria-pressed="false">新雪重視</button><button type="button" data-mode="sun" aria-pressed="false">晴れ重視</button></div>
+  </section>
+  <p id="status" class="status" role="status" aria-live="polite">予報を準備しています…</p>
+  <section class="recommendation" id="recommendation" aria-label="天気から選ぶ候補"></section>
+  <section id="results" aria-labelledby="resultsTitle" tabindex="-1"><div class="results-heading"><h2 id="resultsTitle">予報を比べる</h2><span id="resultCount"></span></div><p class="guide-line">新雪は朝9時まで24時間、気温・風は日中9〜15時の予想。</p><div class="resort-grid" id="resorts"></div></section>
+  <details class="about"><summary>おすすめの選び方と、予報について</summary><div>
+    <p>新雪量・雲量・風・雨を、選んだ好みに合わせて比べます。新雪重視でも、強い風や雷雨などの予報がある場所は上位候補にしません。独自の比較の目安で、雪質や滑走の安全性を保証するものではありません。</p>
+    <p>「新雪」は前日9時から当日9時までに降る雪の予想です。ゲレンデの実測積雪や、圧雪後の雪の厚さではありません。表示標高の地点での予報なので、山頂や麓では変わります。</p>
+    <p>風速10m/s以上・瞬間風速18m/s以上、視程1km未満、日中の雨2mm以上、雷雨の予報を確認事項として表示します。これらはアプリの比較用の基準で、リフトの運休基準ではありません。</p>
+    <p>表示時に予報を確認し、取得から1時間以内は再取得を省きます。通信できない時は前回の予報と取得時刻を表示します。6時間以上前の予報はおすすめの対象から外します。</p>
+    <p>通常はOpen-Meteoの自動選択モデルを使います。接続できない時はGFSアンサンブルのコントロール予報に切り替え、「GFS予報」と表示します。アンサンブル平均や確率を表す値ではありません。</p>
+    <p>営業・リフト運行・道路状況は、各スキー場の公式情報で確認してください。</p>
+    <p>予報出典：<a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>（<a href="https://open-meteo.com/en/licence" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>）。各種気象モデルのデータを集計・加工しています。位置・標高はスキー場付近の目安です。</p>
+  </div></details>
+  <footer><a href="../">スタンスメモへ戻る</a><p>ST​ANCE MEMO · WEATHER TRIAL</p></footer>
+  <noscript><p class="empty">予報を表示するにはJavaScriptを有効にしてください。</p></noscript>
+</main>
+</body>
+</html>

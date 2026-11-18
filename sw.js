@@ -1,11 +1,13 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1089';
-const APP_VERSION = '2.4.2';
-const RELEASE_NOTES = ["「リンクをコピー」の文字をボタンの中央に揃えました。"];
+const RELEASE = '1092';
+const APP_VERSION = '2.5.0';
+const RELEASE_NOTES = ["メニューの「表示」から、19地点・7日間の雪山の天気を比較できるようにしました。","日付・エリア・新雪重視／晴れ重視で、おすすめ候補と理由を表示します。お気に入りや前回の予報表示にも対応しました。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
 const SHELL = [
+  'weather/index.html', `weather/weather.css?v=${RELEASE}`,
+  `weather/engine.js?v=${RELEASE}`, `weather/app.js?v=${RELEASE}`, 'weather/resorts.json',
   'index.html', `style.css?v=${RELEASE}`, `outdoor.css?v=${RELEASE}`,
   `theme.css?v=${RELEASE}`, `theme.js?v=${RELEASE}`, `script.js?v=${RELEASE}`,
   `pwa.css?v=${RELEASE}`, `pwa.js?v=${RELEASE}`, 'manifest.webmanifest',
@@ -49,11 +51,13 @@ self.addEventListener('fetch', event => {
   const request = event.request;
   const url = new URL(request.url);
   if (request.method !== 'GET' || url.origin !== BASE.origin || !url.pathname.startsWith(BASE.pathname)) return;
-  const navigation = request.mode === 'navigate' && (url.pathname === BASE.pathname || url.pathname === new URL('index.html', BASE).pathname);
+  const page = request.mode === 'navigate' ? (url.pathname === BASE.pathname || url.pathname === new URL('index.html', BASE).pathname) ? 'index.html'
+    : (url.pathname === new URL('weather/', BASE).pathname || url.pathname === new URL('weather/index.html', BASE).pathname) ? 'weather/index.html' : null : null;
+  const navigation = page !== null;
   if (!navigation && !SHELL_URLS.has(url.href)) return;
   event.respondWith((async () => {
     const cache = await caches.open(CACHE_NAME);
-    const cached = await cache.match(navigation ? new URL('index.html', BASE).href : request);
+    const cached = await cache.match(navigation ? new URL(page, BASE).href : request);
     if (cached) return cached;
     try { return await fetch(request); }
     catch (error) {

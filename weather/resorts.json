@@ -1,0 +1,173 @@
+[
+  {
+    "id": "hirafu",
+    "name": "ニセコ グラン・ヒラフ",
+    "region": "北海道",
+    "lat": 42.86,
+    "lon": 140.7,
+    "elevation": 800,
+    "official": "https://www.grand-hirafu.jp/"
+  },
+  {
+    "id": "rusutsu",
+    "name": "ルスツ",
+    "region": "北海道",
+    "lat": 42.75,
+    "lon": 140.9,
+    "elevation": 600,
+    "official": "https://rusutsu.com/trail-map/"
+  },
+  {
+    "id": "kiroro",
+    "name": "キロロ",
+    "region": "北海道",
+    "lat": 43.08,
+    "lon": 140.99,
+    "elevation": 900,
+    "official": "https://www.kiroro.co.jp/ja/snowworld/"
+  },
+  {
+    "id": "furano",
+    "name": "富良野",
+    "region": "北海道",
+    "lat": 43.32,
+    "lon": 142.35,
+    "elevation": 600,
+    "official": "https://www.princehotels.co.jp/ski/furano/"
+  },
+  {
+    "id": "hakkoda",
+    "name": "八甲田",
+    "region": "東北",
+    "lat": 40.66,
+    "lon": 140.85,
+    "elevation": 1000,
+    "official": "https://www.hakkoda-ropeway.jp/"
+  },
+  {
+    "id": "appi",
+    "name": "安比高原",
+    "region": "東北",
+    "lat": 40.01,
+    "lon": 141,
+    "elevation": 900,
+    "official": "https://www.appi.co.jp/area/ski/"
+  },
+  {
+    "id": "zao",
+    "name": "蔵王温泉",
+    "region": "東北",
+    "lat": 38.17,
+    "lon": 140.42,
+    "elevation": 1200,
+    "official": "https://zaomountainresort.com/"
+  },
+  {
+    "id": "inawashiro",
+    "name": "猪苗代",
+    "region": "東北",
+    "lat": 37.58,
+    "lon": 140.08,
+    "elevation": 900,
+    "official": "https://www.inawashiro-ski.com/"
+  },
+  {
+    "id": "marunuma",
+    "name": "丸沼高原",
+    "region": "群馬",
+    "lat": 36.81,
+    "lon": 139.33,
+    "elevation": 1700,
+    "official": "https://www.marunuma.jp/winter/"
+  },
+  {
+    "id": "kawaba",
+    "name": "川場",
+    "region": "群馬",
+    "lat": 36.75,
+    "lon": 139.1,
+    "elevation": 1600,
+    "official": "https://www.kawaba.co.jp/"
+  },
+  {
+    "id": "naeba",
+    "name": "苗場",
+    "region": "新潟",
+    "lat": 36.79,
+    "lon": 138.78,
+    "elevation": 1200,
+    "official": "https://www.princehotels.co.jp/ski/naeba/"
+  },
+  {
+    "id": "gala",
+    "name": "GALA湯沢",
+    "region": "新潟",
+    "lat": 36.95,
+    "lon": 138.81,
+    "elevation": 800,
+    "official": "https://gala.co.jp/winter/"
+  },
+  {
+    "id": "akakura",
+    "name": "赤倉温泉",
+    "region": "新潟",
+    "lat": 36.89,
+    "lon": 138.17,
+    "elevation": 1000,
+    "official": "https://akakura-ski.com/"
+  },
+  {
+    "id": "nozawa",
+    "name": "野沢温泉",
+    "region": "長野",
+    "lat": 36.92,
+    "lon": 138.45,
+    "elevation": 1000,
+    "official": "https://nozawaski.com/"
+  },
+  {
+    "id": "shiga",
+    "name": "志賀高原",
+    "region": "長野",
+    "lat": 36.71,
+    "lon": 138.51,
+    "elevation": 1700,
+    "official": "https://shigakogen-ski.or.jp/"
+  },
+  {
+    "id": "happo",
+    "name": "白馬八方尾根",
+    "region": "長野",
+    "lat": 36.7,
+    "lon": 137.83,
+    "elevation": 1200,
+    "official": "https://www.happo-one.jp/"
+  },
+  {
+    "id": "takasu",
+    "name": "高鷲スノーパーク",
+    "region": "岐阜",
+    "lat": 35.96,
+    "lon": 136.85,
+    "elevation": 1200,
+    "official": "https://www.takasu.gr.jp/"
+  },
+  {
+    "id": "hachikita",
+    "name": "ハチ北",
+    "region": "兵庫",
+    "lat": 35.4,
+    "lon": 134.56,
+    "elevation": 800,
+    "official": "https://www.hachi-hachikita.co.jp/"
+  },
+  {
+    "id": "daisen",
+    "name": "大山マウンテンリゾート",
+    "region": "鳥取",
+    "lat": 35.36,
+    "lon": 133.55,
+    "elevation": 900,
+    "official": "https://daisen-mountain.jp/"
+  }
+]
