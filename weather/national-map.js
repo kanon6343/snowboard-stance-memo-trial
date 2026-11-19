@@ -9,8 +9,8 @@
   const recent=r=>['fresh','cached'].includes(E.cacheState(r.fetchedAt));
   const island=region=>region==='北海道'?'hokkaido':['愛媛','香川','徳島','高知'].includes(region)?'shikoku':['福岡','佐賀','長崎','熊本','大分','宮崎','鹿児島'].includes(region)?'kyushu':region==='沖縄'?'okinawa':'honshu';
   function hotCandidates(entries,date,mode){return E.ranked(entries,date,mode).filter(r=>recent(r)&&r.recommendation.eligible&&r.recommendation.score>=75).slice(0,3);}
-  const zoomLevel=scale=>scale>=3.25?3:scale>=2.25?2:scale>=1.5?1:0;
-  const levelScale=[1,1.5,2.25,3.25];
+  const zoomLevel=scale=>scale>=8?3:scale>=4?2:scale>=2?1:0;
+  const levelScale=[1,2,4,8];
   function partition(entries,limit){
     const sets=entries.map(r=>({items:[r],...project(r.resort)}));
     while(true){let closest=null,distance=limit;
