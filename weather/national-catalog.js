@@ -37,21 +37,28 @@
     return {areas,prefectures,details,unclassified};
   }
   const MAX_CANDIDATES=8;
-  const candidateToken=item=>item.prefecture+'~'+item.detailArea;
+  const isAreaCandidate=item=>item.prefecture==='all'&&Object.hasOwn(AREAS,item.area);
+  const candidateToken=item=>isAreaCandidate(item)?'area~'+item.area:item.prefecture+'~'+item.detailArea;
   const candidateKey=items=>'candidates:'+items.map(candidateToken).sort().join('+');
-  const candidateLabel=item=>item.detailArea==='all'?item.prefecture:item.prefecture+'：'+(item.detailArea==='other'?'その他・未分類':detailById.get(item.detailArea)?.label||'');
-  const candidateMatches=(resort,item)=>resort.region===item.prefecture&&matchesDetail(resort,item.detailArea);
+  const candidateLabel=item=>isAreaCandidate(item)?item.area+'全域':item.detailArea==='all'?item.prefecture:item.prefecture+'：'+(item.detailArea==='other'?'その他・未分類':detailById.get(item.detailArea)?.label||'');
+  const candidateMatches=(resort,item)=>isAreaCandidate(item)?AREAS[item.area].includes(resort.region):resort.region===item.prefecture&&matchesDetail(resort,item.detailArea);
   function validCandidate(value,resorts){
     if(!value||typeof value!=='object'||Array.isArray(value)||typeof value.prefecture!=='string')return null;
     const detailArea=value.detailArea===undefined?'all':value.detailArea;
     if(typeof detailArea!=='string')return null;
+    if(value.prefecture==='all')return Object.hasOwn(AREAS,value.area)&&detailArea==='all'&&resorts.some(r=>AREAS[value.area].includes(r.region))?{area:value.area,prefecture:'all',detailArea:'all'}:null;
     const scope=normalizeScope({area:'all',prefecture:value.prefecture,detailArea},resorts);
     return scope.prefecture!=='all'&&scope.prefecture===value.prefecture&&scope.detailArea===detailArea?{prefecture:scope.prefecture,detailArea}:null;
   }
+  function candidateCovers(parent,child){
+    if(isAreaCandidate(parent))return isAreaCandidate(child)?parent.area===child.area:AREAS[parent.area].includes(child.prefecture);
+    if(isAreaCandidate(child))return parent.detailArea==='all'&&AREAS[child.area].length===1&&AREAS[child.area][0]===parent.prefecture;
+    return parent.prefecture===child.prefecture&&(parent.detailArea==='all'||parent.detailArea===child.detailArea);
+  }
   function addCandidate(current,value,resorts){
     const item=validCandidate(value,resorts);if(!item)return {items:current,status:'invalid'};
-    if(current.some(x=>x.prefecture===item.prefecture&&(x.detailArea==='all'||x.detailArea===item.detailArea)))return {items:current,status:'covered'};
-    const next=item.detailArea==='all'?current.filter(x=>x.prefecture!==item.prefecture):current.slice();
+    if(current.some(x=>candidateCovers(x,item)))return {items:current,status:'covered'};
+    const next=current.filter(x=>!candidateCovers(item,x));
     if(next.length>=MAX_CANDIDATES)return {items:current,status:'limit'};
     return {items:[...next,item],status:'added'};
   }
@@ -77,5 +84,5 @@
     const note=document.createElement('p');note.textContent='OpenSkiDataの日本の下り系施設から、廃止扱い・名称未登録を除いて収録。現在の営業を保証する一覧ではなく、収録漏れ・重複・休止施設が含まれる可能性があります。';box.append(note);
     for(const [label,href]of [['OpenSkiData / OpenSkiMap.org','https://www.openskidata.org/'],['© OpenStreetMap contributors（ODbL）','https://www.openstreetmap.org/copyright'],['Skimap.org','https://skimap.org/'],["Who's On First",'https://whosonfirst.org/'],['© Mapterhorn','https://mapterhorn.com/'],['加工データ・ライセンス','DATA-LICENSE.md']]){const a=document.createElement('a');a.textContent=label;a.href=href;a.target='_blank';a.rel='noopener noreferrer';box.append(a,document.createTextNode(' · '));}return wrapper;
   }
-  window.HaruNationalCatalog={AREAS,MAX_CANDIDATES,candidateToken,candidateKey,candidateLabel,candidateMatches,addCandidate,normalizeCandidates,candidateResorts,DETAIL_AREAS,areaFor,detailFor,detailLabel,matchesDetail,normalizeScope,scopeOptions,matchesRegion,matches,elevation,url,websiteLabel,credits,PAGE_SIZE:40,MAX_FORECAST:40};
+  window.HaruNationalCatalog={AREAS,MAX_CANDIDATES,isAreaCandidate,candidateCovers,candidateToken,candidateKey,candidateLabel,candidateMatches,addCandidate,normalizeCandidates,candidateResorts,DETAIL_AREAS,areaFor,detailFor,detailLabel,matchesDetail,normalizeScope,scopeOptions,matchesRegion,matches,elevation,url,websiteLabel,credits,PAGE_SIZE:40,MAX_FORECAST:40};
 })();

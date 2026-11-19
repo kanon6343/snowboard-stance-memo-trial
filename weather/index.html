@@ -7,22 +7,22 @@
   <title>雪山の天気 | スタンスメモ 試作</title>
   <meta name="description" content="スキー場の7日間の天気、新雪、風を比べて、次に滑る場所の候補を探します。">
   <link rel="icon" href="../icons/icon-trial-192.png" type="image/png">
-  <link rel="stylesheet" href="weather.css?v=1106">
-  <link rel="stylesheet" href="views.css?v=1106">
-  <link rel="stylesheet" href="national-map.css?v=1106">
-  <link rel="stylesheet" href="spot-info.css?v=1106">
-  <script src="../theme.js?v=1106"></script>
-  <script src="national-catalog.js?v=1106" defer></script>
-  <script src="facility-info.js?v=1106" defer></script>
-  <script src="engine.js?v=1106" defer></script>
-  <script src="map-store.js?v=1106" defer></script>
-  <script src="map-pdf.js?v=1106" defer></script>
-  <script src="spot-info.js?v=1106" defer></script>
-  <script src="japan-outline.js?v=1106" defer></script>
-  <script src="map-viewport.js?v=1106" defer></script>
-  <script src="national-map.js?v=1106" defer></script>
-  <script src="views.js?v=1106" defer></script>
-  <script src="app.js?v=1106" defer></script>
+  <link rel="stylesheet" href="weather.css?v=1107">
+  <link rel="stylesheet" href="views.css?v=1107">
+  <link rel="stylesheet" href="national-map.css?v=1107">
+  <link rel="stylesheet" href="spot-info.css?v=1107">
+  <script src="../theme.js?v=1107"></script>
+  <script src="national-catalog.js?v=1107" defer></script>
+  <script src="facility-info.js?v=1107" defer></script>
+  <script src="engine.js?v=1107" defer></script>
+  <script src="map-store.js?v=1107" defer></script>
+  <script src="map-pdf.js?v=1107" defer></script>
+  <script src="spot-info.js?v=1107" defer></script>
+  <script src="japan-outline.js?v=1107" defer></script>
+  <script src="map-viewport.js?v=1107" defer></script>
+  <script src="national-map.js?v=1107" defer></script>
+  <script src="views.js?v=1107" defer></script>
+  <script src="app.js?v=1107" defer></script>
 </head>
 <body>
 <a class="skip" href="#results">予報一覧へ</a>
@@ -48,7 +48,7 @@
     <p class="location-summary" id="locationSummary" role="status" aria-live="polite"></p>
     <p class="location-help" id="locationHelp">地方だけ、都道府県まででも探せます。<a href="AREA-GUIDE.md" target="_blank" rel="noopener noreferrer">エリアの分け方</a></p>
     <section id="areaCandidates" class="area-candidates" aria-labelledby="candidateHeading" hidden>
-      <div class="candidate-add-row"><button id="addAreaCandidate" type="button" disabled>都道府県を選んで追加</button><span id="candidateSelectionHint">選んだエリアを追加</span></div>
+      <div class="candidate-add-row"><button id="addAreaCandidate" type="button" disabled>地方・都道府県を選んで追加</button><span id="candidateSelectionHint">地方・県・詳細エリアを追加</span></div>
       <div class="candidate-heading-row"><h2 id="candidateHeading">比較するエリア <span id="candidateCount">0 / 8</span></h2><button id="clearAreaCandidates" type="button" hidden>クリア</button></div>
       <div id="candidateChips" class="candidate-chips" role="group" aria-label="比較候補のエリア"></div>
       <p id="candidateHelp" class="candidate-help">地方をまたいで8エリアまで追加できます。候補に入れた範囲をまとめて表示します。</p>

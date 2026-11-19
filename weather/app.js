@@ -85,10 +85,10 @@
     byId('multipleAreaMode').setAttribute('aria-pressed',String(prefs.candidateMode));
     byId('areaCandidates').hidden=!prefs.candidateMode;
     if(!prefs.candidateMode)return;
-    const current={prefecture:prefs.prefecture,detailArea:prefs.detailArea},plan=N.addCandidate(prefs.candidates,current,resorts),add=byId('addAreaCandidate');
+    const current=prefs,plan=N.addCandidate(prefs.candidates,current,resorts),add=byId('addAreaCandidate');
     add.disabled=plan.status!=='added';
-    add.textContent=plan.status==='covered'?'候補に追加済み':plan.status==='limit'?'候補は8エリアまで':prefs.prefecture==='all'?'都道府県を選んで追加':prefs.detailArea==='all'?'この県を候補に追加':'このエリアを候補に追加';
-    byId('candidateSelectionHint').textContent=prefs.prefecture==='all'?'県を選んでから追加できます':N.candidateLabel(current);
+    add.textContent=plan.status==='covered'?'候補に追加済み':plan.status==='limit'?'候補は8エリアまで':plan.status==='invalid'?'地方・都道府県を選んで追加':prefs.prefecture==='all'?'この地方を候補に追加':prefs.detailArea==='all'?'この県を候補に追加':'このエリアを候補に追加';
+    byId('candidateSelectionHint').textContent=plan.status==='invalid'?'地方か都道府県を選ぶと追加できます':N.candidateLabel(current);
     byId('candidateCount').textContent=prefs.candidates.length+' / '+N.MAX_CANDIDATES;
     byId('clearAreaCandidates').hidden=!prefs.candidates.length;
     const chips=byId('candidateChips');
@@ -98,12 +98,12 @@
       chips.dataset.items=signature;
     }
     const summary=byId('locationSummary');summary.textContent='追加するエリア：'+summary.textContent;
-    byId('candidateHelp').textContent=prefs.candidates.length?'候補の範囲をまとめて表示中。県全体と詳細エリアを混ぜられます。スキー場の横並び比較は3か所まで。':'地方をまたいで8エリアまで追加できます。候補に入れた範囲をまとめて表示します。';
+    byId('candidateHelp').textContent=prefs.candidates.length?'候補の範囲をまとめて表示中。地方全体・県全体・詳細エリアを混ぜられます。スキー場の横並び比較は3か所まで。':'地方をまたいで8エリアまで追加できます。候補に入れた範囲をまとめて表示します。';
   }
   function candidateFeedback(text){byId('candidateFeedback').textContent=text;}
   function chooseCandidateMode(multiple){
     feedback('');candidateFeedback('');prefs.candidateMode=multiple;rowLimit=40;
-    if(multiple&&!prefs.candidates.length&&prefs.prefecture!=='all')prefs.candidates=N.addCandidate([],prefs,resorts).items;
+    if(multiple&&!prefs.candidates.length&&(prefs.area!=='all'||prefs.prefecture!=='all'))prefs.candidates=N.addCandidate([],prefs,resorts).items;
     savePrefs();render();void refresh();
   }
   function drawDates() {
@@ -164,11 +164,11 @@
     const target=byId('resorts');target.dataset.layout=view.layout;target.setAttribute('aria-labelledby','layout-'+view.layout);target.replaceChildren();
     byId('resultsTitle').textContent=view.layout==='map'?(prefs.candidateMode?'候補エリアのマップ':prefs.region==='all'?'全国マップ':scopeTitle()+'のマップ'):view.layout==='compare'?'候補を比較':view.layout==='spot'?'スキー場の詳細':prefs.candidateMode?'候補エリアの予報':prefs.region==='all'?'全国の予報':scopeTitle()+'の予報';
     byId('resultCount').textContent=view.layout==='compare'?state.compared.length+' / '+list.length+'地点':(view.layout==='list'?Math.min(rowLimit,list.length)+' / ':'')+list.length+'地点';
-    if(!list.length)target.append(prefs.candidateMode&&!prefs.candidates.length?empty('比べたい県・エリアを追加しよう','上の地方・都道府県・詳細エリアから選び、「候補に追加」を押すと、地方をまたいでまとめて探せます。'):empty(prefs.favoritesOnly?'お気に入りの場所を選ぼう':'表示する場所がありません','名前やお気に入りの条件を変えると、候補を探せます。',true));
+    if(!list.length)target.append(prefs.candidateMode&&!prefs.candidates.length?empty('比べたい地方・県・エリアを追加しよう','上の地方・都道府県・詳細エリアから選び、「候補に追加」を押すと、地方をまたいでまとめて探せます。'):empty(prefs.favoritesOnly?'お気に入りの場所を選ぼう':'表示する場所がありません','名前やお気に入りの条件を変えると、候補を探せます。',true));
     else target.append(V.render({layout:view.layout,entries:view.layout==='list'?list.slice(0,rowLimit):list,dates:days,date:prefs.date,mode:prefs.mode,totalLocations:resorts.length,...state,expanded,busy,offline,formatTime:nowText,isFavorite:id=>prefs.favorites.includes(id)}));
     if(view.layout==='list'&&list.length>rowLimit){const more=el('button','catalog-more','さらに40地点を見る（'+Math.min(rowLimit,list.length)+' / '+list.length+'地点表示）');more.type='button';more.addEventListener('click',()=>{rowLimit+=40;render();void refresh();});target.append(more);}
     const status=byId('status'),good=list.filter(r=>r.day?.valid),old=good.filter(r=>E.cacheState(r.fetchedAt)==='old'),missing=list.filter(r=>!r.day?.valid&&records.has(r.resort.id)),unrequested=list.filter(r=>!records.has(r.resort.id));
-    if(prefs.candidateMode&&!prefs.candidates.length)status.textContent='比べたい県・エリアを候補に追加してください。';
+    if(prefs.candidateMode&&!prefs.candidates.length)status.textContent='比べたい地方・県・エリアを候補に追加してください。';
     else if(busy)status.textContent='予報を確認中… '+finished+' / '+total+'地点';
     else if(!records.size)status.textContent=offline?'オフラインです。予報はまだ取得できていません。':'予報を取得できませんでした。通信状態を確認して更新を試してください。';
     else {
@@ -222,8 +222,8 @@
   byId('addAreaCandidate').addEventListener('click',()=>{
     if(!prefs.candidateMode)return;
     const plan=N.addCandidate(prefs.candidates,prefs,resorts);
-    if(plan.status!=='added'){candidateFeedback(plan.status==='limit'?'比較候補は8エリアまでです。1つ外すと追加できます。':plan.status==='covered'?'この範囲は候補に入っています。':'都道府県を選んでください。');return;}
-    prefs.candidates=plan.items;rowLimit=40;savePrefs();render();candidateFeedback(N.candidateLabel({prefecture:prefs.prefecture,detailArea:prefs.detailArea})+'を候補に追加しました。');void refresh();
+    if(plan.status!=='added'){candidateFeedback(plan.status==='limit'?'比較候補は8エリアまでです。1つ外すと追加できます。':plan.status==='covered'?'この範囲は候補に入っています。':'地方か都道府県を選んでください。');return;}
+    prefs.candidates=plan.items;rowLimit=40;savePrefs();render();candidateFeedback(N.candidateLabel(prefs)+'を候補に追加しました。');void refresh();
   });
   byId('candidateChips').addEventListener('click',event=>{
     const button=event.target.closest('button[data-remove-candidate]');if(!button)return;
