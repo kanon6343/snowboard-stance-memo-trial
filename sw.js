@@ -1,7 +1,7 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1107';
-const APP_VERSION = '2.13.1';
-const RELEASE_NOTES = ["複数エリアの候補に、地方全体も追加できるようになりました。", "東海＋近畿、東北＋長野など、地方・県・詳細エリアを混ぜて最大8候補で探せます。", "地方とその中の県・詳細エリアは重複をまとめ、前回の県・詳細の候補も引き継ぎます。"];
+const RELEASE = '1108';
+const APP_VERSION = '2.13.2';
+const RELEASE_NOTES = ["予報を追加取得しても表示中のデータを保持し、一覧の順番が動かないようにしました。", "比較へ追加したスキー場の予報を自動取得し、別のエリアの比較設定も復元します。", "全国の初回取得を地方へ分散し、おすすめに取得済み地点数を表示します。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;

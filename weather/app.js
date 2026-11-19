@@ -40,11 +40,26 @@
   function restoreViews(){
     const saved=read(VIEW_KEY);if(saved&&typeof saved==='object'){
       if(layouts.includes(saved.layout))view.layout=saved.layout;
-      const ids=new Set(resorts.map(r=>r.id));
-      const scopes=[N.candidateKey(prefs.candidates),'all',...Object.keys(N.AREAS),...new Set(resorts.map(r=>r.region)),...N.DETAIL_AREAS.map(g=>g.prefecture+'|'+g.id),...[...new Set(resorts.map(r=>r.region))].map(p=>p+'|other')];
-      for(const region of scopes)for(const suffix of ['|all','|favorites']){
-        const key=region+suffix,chosen=saved.compared?.[key];if(Array.isArray(chosen))view.compared[key]=[...new Set(chosen.filter(id=>ids.has(id)))].slice(0,3);
-        if(ids.has(saved.focused?.[key]))view.focused[key]=saved.focused[key];
+      const object=value=>value&&typeof value==='object'&&!Array.isArray(value)?value:{};
+      const compared=object(saved.compared),focused=object(saved.focused);
+      const scopes=new Set(['all',...Object.keys(N.AREAS),...new Set(resorts.map(r=>r.region)),...N.DETAIL_AREAS.map(g=>g.prefecture+'|'+g.id),...[...new Set(resorts.map(r=>r.region))].map(p=>p+'|other')]);
+      for(const key of new Set([...Object.keys(compared),...Object.keys(focused)])){
+        const match=key.match(/^(.*)\|(all|favorites)$/);if(!match)continue;
+        const scope=match[1];let locations;
+        if(scope.startsWith('candidates:')){
+          const tokens=scope.slice('candidates:'.length).split('+').filter(Boolean);if(tokens.length>N.MAX_CANDIDATES)continue;
+          const entries=tokens.map(token=>{const parts=token.split('~');return parts.length!==2?null:parts[0]==='area'?{area:parts[1],prefecture:'all',detailArea:'all'}:{prefecture:parts[0],detailArea:parts[1]};});
+          const candidates=N.normalizeCandidates(entries,resorts);
+          // Only accept canonical keys. Keep every valid saved combination, not just the active one.
+          if(N.candidateKey(candidates)!==scope)continue;
+          locations=N.candidateResorts(resorts,candidates);
+        }else{
+          if(!scopes.has(scope))continue;
+          const [region,detail='all']=scope.split('|');locations=resorts.filter(r=>N.matchesRegion(r,region)&&N.matchesDetail(r,detail));
+        }
+        const ids=new Set(locations.map(r=>r.id)),chosen=compared[key];
+        if(Array.isArray(chosen))view.compared[key]=[...new Set(chosen.filter(id=>ids.has(id)))].slice(0,3);
+        if(ids.has(focused[key]))view.focused[key]=focused[key];
       }
     }
     const requested=new URLSearchParams(location.search).get('view');if(layouts.includes(requested))view.layout=requested;
@@ -56,7 +71,7 @@
     return {compared:chosen,focused:view.focused[key]};
   }
   function saveCache() {
-    while(records.size>60)records.delete(records.keys().next().value);
+    // Bound persistent storage without evicting forecasts used by this open page.
     const cached=[...records.values()].slice(-40);let payload={version:1,records:cached};
     while(JSON.stringify(payload).length>2200000&&cached.length>1)cached.shift();write(KEY,payload);
   }
@@ -113,12 +128,17 @@
     strip.scrollLeft=left;
   }
   function viewRecords() {
-    const selected=prefs.candidateMode?N.candidateResorts(resorts,prefs.candidates):resorts.filter(r=>N.matchesRegion(r,prefs.region)&&N.matchesDetail(r,prefs.detailArea));
+    const selected=prefs.candidateMode?N.candidateResorts(resorts,prefs.candidates):prefs.region==='all'?nationwideOrder():resorts.filter(r=>N.matchesRegion(r,prefs.region)&&N.matchesDetail(r,prefs.detailArea));
     return selected.filter(r=>N.matches(r,query)&&(!prefs.favoritesOnly||prefs.favorites.includes(r.id))).map(resort=>{
       const saved=records.get(resort.id);let forecast=[];
       if(saved)try{forecast=days.map(date=>E.summarize(saved.raw,date));}catch{}
       return {resort,days:forecast,fetchedAt:saved?.fetchedAt??'',source:saved?.source??'auto',failed:failed.has(resort.id)};
     });
+  }
+  function nationwideOrder(){
+    const ordered=N.candidateResorts(resorts,Object.keys(N.AREAS).map(area=>({area,prefecture:'all',detailArea:'all'}))),ids=new Set(ordered.map(r=>r.id));
+    // Older catalogs used broad region names for some resorts. Never drop unclassified entries.
+    return [...ordered,...resorts.filter(r=>!ids.has(r.id))];
   }
   const rankable = record => record.recommendation.eligible && ['fresh','cached'].includes(E.cacheState(record.fetchedAt));
   function reasonList(reasons) {const ul=el('ul','reasons');for(const reason of reasons)ul.append(el('li','',reason));return ul;}
@@ -137,7 +157,8 @@
       target.append(empty(anyRecent?'今日は条件を見比べて選ぼう':anyValid?'前回の予報を表示中':'予報が揃うと候補が出ます',anyRecent?'風・雨・視界などに確認したい予報があるため、上位候補は出していません。下の一覧と公式情報を確認できます。':anyValid?'取得から6時間以上経っているため、おすすめは更新後に表示します。':'通信できる状態で右上の更新を試してください。取得できない値を0に置き換えることはありません。'));
       return;
     }
-    target.append(el('p','pick-heading',dateText(prefs.date)+' · '+(prefs.candidateMode?'選んだエリアの取得済み予報から · ':'')+MODE_LABELS[prefs.mode]+'で選ぶ候補'));
+    const coverage=list.filter(r=>r.day?.valid&&['fresh','cached'].includes(E.cacheState(r.fetchedAt))).length;
+    target.append(el('p','pick-heading',dateText(prefs.date)+' · '+(prefs.candidateMode?'選んだエリアの':'')+'取得済み'+coverage+' / '+list.length+'地点から · '+MODE_LABELS[prefs.mode]+'で選ぶ候補'));
     const r=picks[0],pick=el('article','pick'),body=el('div');
     body.append(el('p','pick-place',r.resort.region+' · '+N.elevation(r.resort)),el('h3','',r.resort.name),reasonList(r.recommendation.reasons));
     const snow=el('div','pick-snow'),strong=el('strong','',E.format(r.day.snow,1));strong.append(el('small','','cm'));snow.append(strong,el('small','','朝までの新雪予想'));
@@ -157,7 +178,8 @@
     byId('layoutTabs').querySelectorAll('button').forEach(b=>{const selected=b.dataset.view===view.layout;b.setAttribute('aria-selected',String(selected));b.tabIndex=selected?0:-1;});
     byId('priorities').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===prefs.mode)));
     const base=viewRecords(),ranked=E.ranked(base,prefs.date,prefs.mode),byResort=new Map(ranked.map(r=>[r.resort.id,r]));
-    const list=(prefs.candidateMode||prefs.region==='all')&&view.layout==='list'?ranked:base.map(r=>byResort.get(r.resort.id));
+    // Keep pagination and fetch selection in the same stable order; rank only the recommendation box.
+    const list=base.map(r=>byResort.get(r.resort.id));
     const state=ensureViews(base);byId('catalogScope').textContent=base.length+' / '+resorts.length+'地点 · 名前やエリアで絞り込み。予報は最大40地点ずつ確認します。';const discovery=(prefs.candidateMode||prefs.region==='all')&&view.layout==='list';
     byId('recommendation').hidden=!discovery;byId('priorities').hidden=!discovery&&view.layout!=='map';byId('dateControls').hidden=view.layout==='spot';
     if(discovery)drawRecommendation(ranked);
@@ -215,7 +237,7 @@
     const base=viewRecords();ensureViews(base);const key=bucket(),chosen=view.compared[key];
     if(chosen.includes(id)){if(chosen.length===1){feedback('比較する場所を1か所以上選んでください。');return;}view.compared[key]=chosen.filter(x=>x!==id);}
     else{if(chosen.length>=3){feedback('比較は3か所まで。比較画面で1つ外してから追加できます。');return;}view.compared[key]=[...chosen,id];}
-    saveViews();render();
+    saveViews();render();void refresh(false,view.compared[key]);
   }
   byId('singleAreaMode').addEventListener('click',()=>chooseCandidateMode(false));
   byId('multipleAreaMode').addEventListener('click',()=>chooseCandidateMode(true));
