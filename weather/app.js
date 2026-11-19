@@ -95,6 +95,7 @@
     // Replacing the input at that moment can discard the selection entirely.
     if(window.HaruSpotInfo?.isPicking?.()){mapRenderPending=true;return;}
     mapRenderPending=false;
+    window.HaruMapViewport?.detach();
     const active=document.activeElement,focusedDate=active?.dataset.date,focusedAction=active?.dataset.action,focusedId=active?.dataset.id;
     drawDates();byId('region').value=prefs.region;
     byId('favoritesOnly').setAttribute('aria-pressed',String(prefs.favoritesOnly));

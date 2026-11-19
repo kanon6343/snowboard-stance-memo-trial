@@ -1,11 +1,12 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1099';
-const APP_VERSION = '2.9.1';
-const RELEASE_NOTES = ["全国マップを実際の海岸線に近い形へ変更しました。細かな凹凸だけを省き、島の形と位置関係を保っています。","ゲレンデのピン・激アツ候補・エリア選択はそのまま利用できます。"];
+const RELEASE = '1100';
+const APP_VERSION = '2.10.0';
+const RELEASE_NOTES = ["全国マップを2本指で拡大・縮小できるようにしました。拡大中は1本指で移動でき、ピンは押しやすい大きさを保ちます。","＋・−・全体へボタンを追加しました。全体表示では1本指の縦スクロールが使えます。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
 const SHELL = [
+  `weather/map-viewport.js?v=${RELEASE}`, 
   `weather/national-map.css?v=${RELEASE}`, `weather/national-map.js?v=${RELEASE}`, `weather/japan-outline.js?v=${RELEASE}`,
   `weather/spot-info.css?v=${RELEASE}`, `weather/spot-info.js?v=${RELEASE}`,
   `weather/map-store.js?v=${RELEASE}`, `weather/map-pdf.js?v=${RELEASE}`, 'weather/spot-catalog.json',
