@@ -1,12 +1,593 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-19T01:27:54+00:00",
+  "generatedAt": "2026-11-19T05:46:58+00:00",
   "resorts": {
+    "hirafu": {
+      "lifts": {
+        "state": "ok",
+        "sourceUrl": "https://www.grand-hirafu.jp/snow/status/",
+        "checkedAt": "2026-11-19T05:46:58+00:00",
+        "sourceUpdatedAt": null,
+        "items": [
+          {
+            "name": "エースゴンドラ(10人乗り)",
+            "status": "closed",
+            "label": "運休/閉鎖中"
+          },
+          {
+            "name": "キングゴンドラ(8人乗り)",
+            "status": "closed",
+            "label": "運休/閉鎖中"
+          },
+          {
+            "name": "エースファミリークワッド",
+            "status": "closed",
+            "label": "運休/閉鎖中"
+          },
+          {
+            "name": "エース第3クワッド",
+            "status": "closed",
+            "label": "運休/閉鎖中"
+          },
+          {
+            "name": "エース第4ペア",
+            "status": "closed",
+            "label": "運休/閉鎖中"
+          },
+          {
+            "name": "キング第３シックス",
+            "status": "closed",
+            "label": "運休/閉鎖中"
+          },
+          {
+            "name": "キング第４シングル",
+            "status": "closed",
+            "label": "運休/閉鎖中"
+          },
+          {
+            "name": "キングホリデーペア",
+            "status": "closed",
+            "label": "運休/閉鎖中"
+          },
+          {
+            "name": "スインギングモンキー",
+            "status": "closed",
+            "label": "運休/閉鎖中"
+          }
+        ]
+      },
+      "courses": {
+        "state": "ok",
+        "sourceUrl": "https://www.grand-hirafu.jp/snow/status/",
+        "checkedAt": "2026-11-19T05:46:58+00:00",
+        "sourceUpdatedAt": null,
+        "items": [
+          {
+            "name": "1. ファミリーコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "2. せんの木コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "3. アルペンコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "4. キング・エース連絡通路",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "5. 温泉沢コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "6. スーパーコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "7. 初級者迂回路",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "8. グリーンコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "9. フリココース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "10. 白樺コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "11. センターコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "12. ラージコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "13. 高原コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "14. 望羊コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "15. 第2の壁",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "16. 国体コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "17. 粉雪コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "18. ホリデーコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "19. 見晴コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "20. 林間コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "21. ジャンボコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "22. ダイナミックコース",
+            "status": "closed",
+            "label": "クローズ"
+          }
+        ]
+      }
+    },
+    "rusutsu": {
+      "lifts": {
+        "state": "ok",
+        "sourceUrl": "https://rusutsu.com/lift-and-trail-status/",
+        "checkedAt": "2026-11-19T05:46:58+00:00",
+        "sourceUpdatedAt": "2026-04-01T23:04:22+00:00",
+        "items": [
+          {
+            "name": "羊蹄ゴンドラ",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "ウエスト第1クワッド",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "ウエスト第2クワッド",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "ウエストタイガーペアリフト",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "イーストゴンドラ1号線",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "イーストゴンドラ2号線",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "イーストクワッド",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "イースト第1ペアリフト",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "イースト第2ペアリフト",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "タワーペアリフト",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "イゾラゴンドラ",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "アクロス第1ペアリフト",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "アクロス第2ペアリフト",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "イゾラ第1クワッド",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "イゾラ第2クワッド",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "イゾラ第3クワッド",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "イゾラ第4超高速クワッド",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          },
+          {
+            "name": "イゾラ第5ペアリフト",
+            "status": "closed",
+            "label": "運休/本日営業終了"
+          }
+        ]
+      },
+      "courses": {
+        "state": "ok",
+        "sourceUrl": "https://rusutsu.com/lift-and-trail-status/",
+        "checkedAt": "2026-11-19T05:46:58+00:00",
+        "sourceUpdatedAt": "2026-04-01T23:04:22+00:00",
+        "items": [
+          {
+            "name": "ファミリーコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ホワイトラバーコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "バンビコース - 上部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "バンビコース - 下部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "エバーコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "エリートコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "林間コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "タイガーコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "レインボーコース - 上部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "レインボーコース - 中部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "レインボーコース - 下部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ダイナミックコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "スカイコース - 上部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "スカイコース - 下部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ジャイアントコース - 上部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ジャイアントコース - 下部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イーストビバルディコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イージートレイル",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "フーボルコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イーストティーニュコース - 上部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イーストティーニュコース - 下部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "スーパーイーストコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "アクロスAコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "アクロスBコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "連絡コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "フリコ沢コース - 上部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "フリコ沢コース - 中部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "フリコ沢コース - 下部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イゾラグランコース - 上部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イゾラグランコース - 中部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イゾラグランコース - 下部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イゾラAコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イゾラBコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イゾラCコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イゾラDコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イゾラD迂回コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イゾラ山頂迂回コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イゾラグラン迂回コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "スティームボートAコース - 上部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "スティームボートAコース - 下部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "スティームボートBコース - 上部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "スティームボートBコース - 中部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "スティームボートBコース - 下部",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ルスツNo.1コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ヘブンリーキャニオンコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ヘブンリースピリットコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ヘブンリービューコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ヘブンリーリッジAコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ヘブンリーリッジBコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ヘブンリートレイル",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "サイドカントリーパーク",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "フリーダムパーク",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "デビューパーク",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "サムライキッズパーク",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "クレヨンしんちゃんクロス",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "クレヨンしんちゃんキッツリーラン",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "イーストMt. 駐車場",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "山頂散策コース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "トレッキングコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ジョギングコース",
+            "status": "closed",
+            "label": "クローズ"
+          }
+        ]
+      }
+    },
     "kiroro": {
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://www.kiroro.co.jp/ja/guide_map/",
-        "checkedAt": "2026-11-19T01:27:54+00:00",
+        "checkedAt": "2026-11-19T05:46:58+00:00",
         "sourceUpdatedAt": "2026-10-13T16:46+09:00",
         "items": [
           {
@@ -59,7 +640,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://www.kiroro.co.jp/ja/guide_map/",
-        "checkedAt": "2026-11-19T01:27:54+00:00",
+        "checkedAt": "2026-11-19T05:46:58+00:00",
         "sourceUpdatedAt": "2026-10-13T16:46+09:00",
         "items": [
           {
@@ -189,7 +770,7 @@
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://www.marunuma.jp/winter/status/",
-        "checkedAt": "2026-11-19T01:27:54+00:00",
+        "checkedAt": "2026-11-19T05:46:58+00:00",
         "sourceUpdatedAt": null,
         "items": [
           {
@@ -237,7 +818,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://www.marunuma.jp/winter/status/",
-        "checkedAt": "2026-11-19T01:27:54+00:00",
+        "checkedAt": "2026-11-19T05:46:58+00:00",
         "sourceUpdatedAt": null,
         "items": [
           {
@@ -337,7 +918,7 @@
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://www.happo-one.jp/gelande/lift/",
-        "checkedAt": "2026-11-19T01:27:54+00:00",
+        "checkedAt": "2026-11-19T05:46:58+00:00",
         "sourceUpdatedAt": "2026-05-06T18:44+09:00",
         "items": [
           {
@@ -440,7 +1021,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://www.happo-one.jp/gelande/condition/",
-        "checkedAt": "2026-11-19T01:27:54+00:00",
+        "checkedAt": "2026-11-19T05:46:58+00:00",
         "sourceUpdatedAt": "2026-04-19T17:23+09:00",
         "items": [
           {
@@ -607,6 +1188,231 @@
             "name": "咲花ゲレンデ北",
             "status": "closed",
             "label": "Ｘ"
+          }
+        ]
+      }
+    },
+    "okuibuki": {
+      "lifts": {
+        "state": "ok",
+        "sourceUrl": "https://www.okuibuki.co.jp/gelande/",
+        "checkedAt": "2026-11-19T05:46:58+00:00",
+        "sourceUpdatedAt": "2026-11-18T17:00+09:00",
+        "items": [
+          {
+            "name": "ファミリーペア",
+            "status": "open",
+            "label": "運行予定"
+          },
+          {
+            "name": "モンブランペア",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "バラエティークワッド",
+            "status": "closed",
+            "label": "準備中"
+          },
+          {
+            "name": "チャンピオントリプル",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "パラダイスペアA線・B線",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "チャレンジペア",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "天狗岩ペア",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "スカイビューペア",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "トンネル付動く歩道（グリーン）",
+            "status": "closed",
+            "label": "準備中"
+          },
+          {
+            "name": "トンネル付動く歩道（オレンジ）",
+            "status": "unknown",
+            "label": "予定未確認"
+          }
+        ],
+        "mode": "planned",
+        "targetDate": "2026-11-19"
+      },
+      "courses": {
+        "state": "ok",
+        "sourceUrl": "https://www.okuibuki.co.jp/gelande/",
+        "checkedAt": "2026-11-19T05:46:58+00:00",
+        "sourceUpdatedAt": "2026-11-18T17:00+09:00",
+        "items": [
+          {
+            "name": "ビギナーゲレンデ",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "ファミリーゲレンデ",
+            "status": "open",
+            "label": "滑走可予定"
+          },
+          {
+            "name": "バラエティーゲレンデ",
+            "status": "closed",
+            "label": "準備中"
+          },
+          {
+            "name": "パラダイスゲレンデ",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "テクニカルコース",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "ダイナミックコース",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "アルペンコースコース",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "チャレンジコース",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "天狗岩コース",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "スカイビューコース",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "モンブラン",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "チャンピオンコース",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "Heavenly46°",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "キッズパーク",
+            "status": "unknown",
+            "label": "予定未確認"
+          }
+        ],
+        "mode": "planned",
+        "targetDate": "2026-11-19"
+      }
+    },
+    "charmant": {
+      "lifts": {
+        "state": "ok",
+        "sourceUrl": "https://charmant-hiuchi.jp/",
+        "checkedAt": "2026-11-19T05:46:58+00:00",
+        "sourceUpdatedAt": "2026-11-07T11:08+09:00",
+        "items": [
+          {
+            "name": "第一クワッドリフト",
+            "status": "closed",
+            "label": "✕"
+          },
+          {
+            "name": "第二ペアリフト",
+            "status": "closed",
+            "label": "✕"
+          },
+          {
+            "name": "第三ペアリフト",
+            "status": "closed",
+            "label": "✕"
+          }
+        ]
+      },
+      "courses": {
+        "state": "ok",
+        "sourceUrl": "https://charmant-hiuchi.jp/",
+        "checkedAt": "2026-11-19T05:46:58+00:00",
+        "sourceUpdatedAt": "2026-11-07T11:08+09:00",
+        "items": [
+          {
+            "name": "スノーマン",
+            "status": "closed",
+            "label": "✕"
+          },
+          {
+            "name": "メール",
+            "status": "closed",
+            "label": "✕"
+          },
+          {
+            "name": "レーズン",
+            "status": "closed",
+            "label": "✕"
+          },
+          {
+            "name": "ヴォレー",
+            "status": "closed",
+            "label": "✕"
+          },
+          {
+            "name": "エビアン",
+            "status": "closed",
+            "label": "✕"
+          },
+          {
+            "name": "メール下部",
+            "status": "closed",
+            "label": "✕"
+          },
+          {
+            "name": "ラパン",
+            "status": "closed",
+            "label": "✕"
+          },
+          {
+            "name": "クール",
+            "status": "closed",
+            "label": "✕"
+          },
+          {
+            "name": "プリンセス",
+            "status": "closed",
+            "label": "✕"
+          },
+          {
+            "name": "ナチュール",
+            "status": "closed",
+            "label": "✕"
           }
         ]
       }

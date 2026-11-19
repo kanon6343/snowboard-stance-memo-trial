@@ -96,7 +96,7 @@
   }
   function requestUrl(resorts) {
     const p=new URLSearchParams({latitude:resorts.map(r=>r.lat).join(','),longitude:resorts.map(r=>r.lon).join(','),
-      elevation:resorts.map(r=>r.elevation).join(','),hourly:NUMERIC_FIELDS.join(','),timezone:'Asia/Tokyo',
+      elevation:resorts.map(r=>finite(r.elevation)?r.elevation:'nan').join(','),hourly:NUMERIC_FIELDS.join(','),timezone:'Asia/Tokyo',
       forecast_days:'7',past_days:'1',wind_speed_unit:'ms'});
     return 'https://api.open-meteo.com/v1/forecast?'+p;
   }

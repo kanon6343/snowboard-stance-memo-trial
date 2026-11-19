@@ -1,0 +1,131 @@
+{
+  "places": 529,
+  "prefectures": 35,
+  "matchedOriginal": [
+    {
+      "id": "rusutsu",
+      "sourceName": "ルスツリゾートスキー場, Rusutsu Resort Ski Area",
+      "distanceKm": 2.4
+    },
+    {
+      "id": "kiroro",
+      "sourceName": "キロロリゾート, Kiroro Resort",
+      "distanceKm": 2.29
+    },
+    {
+      "id": "furano",
+      "sourceName": "富良野スキー場, Furano ski resort, ふらのスキー場",
+      "distanceKm": 1.69
+    },
+    {
+      "id": "hakkoda",
+      "sourceName": "八甲田ロープウェー",
+      "distanceKm": 2.41
+    },
+    {
+      "id": "appi",
+      "sourceName": "安比高原スキー場, Appi Kogen Ski Resort",
+      "distanceKm": 3.71
+    },
+    {
+      "id": "zao",
+      "sourceName": "蔵王温泉スキー場, Zao Onsen Ski Resort",
+      "distanceKm": 1.54
+    },
+    {
+      "id": "inawashiro",
+      "sourceName": "猪苗代スキー場, Inawashiro Snow Paradise",
+      "distanceKm": 0.97
+    },
+    {
+      "id": "marunuma",
+      "sourceName": "丸沼高原スキー場, Marunuma Kogen Ski Resort",
+      "distanceKm": 1.12
+    },
+    {
+      "id": "kawaba",
+      "sourceName": "川場スキー場, Kawaba Ski Resort, Kawaba sukī-ba",
+      "distanceKm": 3.59
+    },
+    {
+      "id": "naeba",
+      "sourceName": "苗場スキー場, Naeba Ski Resort, Naeba sukī-ba",
+      "distanceKm": 2.9
+    },
+    {
+      "id": "gala",
+      "sourceName": "ガーラ湯沢スノーリゾート, Gala Yuzawa Snow Resort",
+      "distanceKm": 2.28
+    },
+    {
+      "id": "akakura",
+      "sourceName": "赤倉温泉スキー場, Akakura Onsen Ski Area",
+      "distanceKm": 0.75
+    },
+    {
+      "id": "charmant",
+      "sourceName": "シャルマン火打, Charmant Hiuchi Snow Resort",
+      "distanceKm": 0.42
+    },
+    {
+      "id": "nozawa",
+      "sourceName": "野沢温泉スキー場, Nozawa Onsen",
+      "distanceKm": 1.71
+    },
+    {
+      "id": "shiga",
+      "sourceName": "Shiga Kogen (志賀高原)",
+      "distanceKm": 3.23
+    },
+    {
+      "id": "happo",
+      "sourceName": "白馬八方尾根, Hakuba Happo One",
+      "distanceKm": 1.09
+    },
+    {
+      "id": "jam-katsuyama",
+      "sourceName": "JAM福井勝山マウンテンリゾート, JAM Fukui Katsuyama Mountain Resort",
+      "distanceKm": 0.32
+    },
+    {
+      "id": "takasu",
+      "sourceName": "高鷲スノーパーク, Takasu Snow Park",
+      "distanceKm": 4.65
+    },
+    {
+      "id": "okuibuki",
+      "sourceName": "グランスノー奥伊吹, Gransnow Okuibuki",
+      "distanceKm": 0.47
+    },
+    {
+      "id": "biwako",
+      "sourceName": "びわ湖バレイ スキー場, Biwako Valley",
+      "distanceKm": 1.06
+    },
+    {
+      "id": "hachikita",
+      "sourceName": "ハチ北高原スキー場, Hachi Kita Ski Area",
+      "distanceKm": 1.17
+    },
+    {
+      "id": "daisen",
+      "sourceName": "だいせんホワイトリゾート, Daisen White Resort",
+      "distanceKm": 4.25
+    },
+    {
+      "id": "ishizuchi",
+      "sourceName": "石鎚スキー場ピクニック園地, Ishizuchi SKi & Snowbaord Resort",
+      "distanceKm": 0.68
+    }
+  ],
+  "unmatchedOriginal": [
+    "hirafu"
+  ],
+  "placesWithLiftNames": 491,
+  "placesWithCourseNames": 211,
+  "liftRecords": 1892,
+  "namedCourseRecords": 1811,
+  "unnamedCourseSegments": 2337,
+  "missingElevation": 28,
+  "missingOfficial": 139
+}

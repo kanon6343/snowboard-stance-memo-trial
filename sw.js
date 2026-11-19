@@ -1,11 +1,13 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1103';
-const APP_VERSION = '2.11.2';
-const RELEASE_NOTES = ["全国マップのピンを、中くらいの拡大でもまとめて見られるよう調整しました。2倍・4倍・8倍で段階的に分かれます。","1000％までの拡大と、縮小した時の再統合はそのまま使えます。"];
+const RELEASE = '1104';
+const APP_VERSION = '2.12.0';
+const RELEASE_NOTES = ["全国35都道府県・529地点へ拡張しました。名前・地域で検索でき、地図と予報・比較・詳細で同じ条件を使えます。","リフト・コースの基本情報と一覧を追加し、公式状況の取込先を7施設に増やしました。未取得・古い掲載・運行予定は現在の状況と区別します。","予報は最大40地点ずつ、選んだ場所を優先して確認します。全国すべての予報を一度に取得する方式ではありません。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
 const SHELL = [
+  `weather/national-catalog.js?v=${RELEASE}`, `weather/facility-info.js?v=${RELEASE}`,
+  'weather/facilities.json', 'weather/DATA-LICENSE.md', 'weather/data-provenance.json',
   `weather/map-viewport.js?v=${RELEASE}`, 
   `weather/national-map.css?v=${RELEASE}`, `weather/national-map.js?v=${RELEASE}`, `weather/japan-outline.js?v=${RELEASE}`,
   `weather/spot-info.css?v=${RELEASE}`, `weather/spot-info.js?v=${RELEASE}`,

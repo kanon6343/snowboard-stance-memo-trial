@@ -1,0 +1,24 @@
+{
+  "license": "ODbL-1.0",
+  "build": {
+    "version": 1,
+    "formatVersion": "16.0.0",
+    "source": {
+      "openStreetMap": {
+        "dataTimestamp": "2026-11-15T01:00:00.000Z"
+      },
+      "skiMapOrg": {
+        "downloadedAt": "2026-11-15T23:40:26.183Z"
+      }
+    },
+    "run": {
+      "startedAt": "2026-11-15T23:40:24.424Z",
+      "finishedAt": "2026-11-16T01:43:51.452Z"
+    }
+  },
+  "sha256": {
+    "ski_areas.geojson": "3c579defe00333ea5007a761c558544f455266e590fb65d8745aad3739c112ca",
+    "lifts.csv": "051f64ab8b1f8c880cb6d95c9ac34a77b6aa530992a86f8e39bf682e7ccea746",
+    "runs.csv": "d9cae9408b4f3e9c2571724d0b89c46f6c70ab57de00d66a9fd80353bd1cab76"
+  }
+}

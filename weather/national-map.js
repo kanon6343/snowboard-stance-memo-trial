@@ -23,7 +23,16 @@
       if(!closest)break;const [i,j]=closest,items=[...sets[i].items,...sets[j].items];sets[i]={items,x:items.reduce((sum,r)=>sum+project(r.resort).x,0)/items.length,y:items.reduce((sum,r)=>sum+project(r.resort).y,0)/items.length};sets.splice(j,1);
     }return sets;
   }
+  function largeGroups(entries,scale,width){
+    const level=zoomLevel(scale),cell=[120,60,30,15][level],buckets=new Map();
+    for(const r of entries){const p=project(r.resort),key=island(r.resort.region)+'|'+Math.floor(p.x/cell)+'|'+Math.floor(p.y/cell);if(!buckets.has(key))buckets.set(key,[]);buckets.get(key).push(r);}
+    const sets=[...buckets.values()].map(items=>{const x=items.reduce((sum,r)=>sum+project(r.resort).x,0)/items.length,y=items.reduce((sum,r)=>sum+project(r.resort).y,0)/items.length;return {items,x,y,px:x,py:y};});
+    const gap=55*700/(Math.max(240,width)*levelScale[level]);
+    for(let pass=0;pass<16;pass++)for(let i=0;i<sets.length;i++)for(let j=i+1;j<sets.length;j++){const a=sets[i],b=sets[j],dx=b.px-a.px,dy=b.py-a.py,d=Math.hypot(dx,dy);if(d>=gap)continue;const ux=d>.01?dx/d:1,uy=d>.01?dy/d:0,shift=(gap-d)/2+.01;a.px=Math.max(20,Math.min(680,a.px-ux*shift));a.py=Math.max(20,Math.min(760,a.py-uy*shift));b.px=Math.max(20,Math.min(680,b.px+ux*shift));b.py=Math.max(20,Math.min(760,b.py+uy*shift));}
+    return sets;
+  }
   function groups(entries,scale=1,width=350){
+    if(entries.length>60)return largeGroups(entries,scale,width);
     const level=zoomLevel(scale);let sets=partition(entries,110);
     // Each level only splits its parent; unrelated clusters never merge on zoom-in.
     if(level>=1)sets=sets.flatMap(g=>partition(g.items,55));
@@ -45,7 +54,7 @@
     const root=make('div','national-map-view'),picks=hotCandidates(ctx.entries,ctx.date,ctx.mode),hot=new Set(picks.map(r=>r.resort.id)),clusters=groups(ctx.entries,window.HaruMapViewport?.getState().scale||1);
     const focused=ctx.entries.find(r=>r.resort.id===ctx.focused)||picks[0]||ctx.entries[0],group=clusters.find(g=>g.items.some(r=>r.resort.id===focused.resort.id)),title=make('div','map-intro');
     title.append(make('h3','','地図で、次に滑る場所を探そう'),make('p','',ctx.date.replaceAll('-','/')+' · '+ctx.entries.length+' / '+ctx.totalLocations+'地点を表示'));root.append(title);
-    const picksBox=make('section','map-hot-picks');picksBox.append(make('h3','','🔥 激アツ候補'+(picks.length?' · '+picks.length+'か所':'')));
+    const picksBox=make('section','map-hot-picks');picksBox.append(make('h3','','🔥 取得済み予報からの激アツ候補'+(picks.length?' · '+picks.length+'か所':'')));
     if(picks.length){const options=make('div','map-hot-options');picks.forEach((r,i)=>{const b=button('','map-select',r.resort.id);b.setAttribute('aria-pressed',String(r.resort.id===focused.resort.id));b.append(make('span','hot-rank',String(i+1)),make('strong','',r.resort.name),make('small','',r.recommendation.reasons[0]));options.append(b);});picksBox.append(options);}
     else picksBox.append(make('p','info-small',ctx.busy?'予報がそろうと、条件の良い候補を表示します。':'今の予報では該当なし。地図から各地の天気を見比べられます。'));
     root.append(picksBox);
@@ -72,10 +81,10 @@
       choiceButtons.replaceChildren();for(const r of selectedGroup.items){const b=button((hot.has(r.resort.id)?'🔥 ':'')+r.resort.name,'map-select',r.resort.id);b.setAttribute('aria-pressed',String(r.resort.id===focused.resort.id));choiceButtons.append(b);}
       if(hadFocus)board.focus({preventScroll:true});return pins;
     }
-    root.append(board);const legend=make('div','national-map-legend');for(const [cls,text]of[['hot','激アツ候補あり'],['normal','予報あり'],['unknown','古い・未取得']]){const n=make('span');n.append(make('i',cls),document.createTextNode(text));legend.append(n);}root.append(legend,make('p','map-locator-note','数字は周辺の地点数です。拡大して指を離すとピンが分かれ、最大付近では1地点ずつ選べます。縮小すると再びまとまります。海岸線の細かな凹凸を省いた地図です。ピンは押しやすい位置へ調整し、元の概略位置と線で結んでいます。'));
+    root.append(board);const legend=make('div','national-map-legend');for(const [cls,text]of[['hot','激アツ候補あり'],['normal','予報あり'],['unknown','古い・未取得']]){const n=make('span');n.append(make('i',cls),document.createTextNode(text));legend.append(n);}root.append(legend,make('p','map-locator-note','数字は周辺の地点数です。拡大して指を離すとピンが分かれます。全国表示では近接地点をまとめ、名前検索・エリア選択でさらに絞り込めます。縮小すると再びまとまります。海岸線の細かな凹凸を省いた地図です。ピンは押しやすい位置へ調整し、元の概略位置と線で結んでいます。'));
     const choices=make('section','map-nearby-choices');choices.append(make('h3','','この付近のゲレンデ'));const choiceButtons=make('div','map-member-buttons');
     for(const r of group.items){const b=button((hot.has(r.resort.id)?'🔥 ':'')+r.resort.name,'map-select',r.resort.id);b.setAttribute('aria-pressed',String(r.resort.id===focused.resort.id));choiceButtons.append(b);}choices.append(choiceButtons);root.append(choices);
-    const r=focused,d=r.day,card=make('article','map-selected-place'),head=make('div','map-selected-head'),name=make('div');card.id='map-selected-'+r.resort.id;card.tabIndex=-1;name.append(make('small','',r.resort.region+' · 標高'+r.resort.elevation+'m付近'),make('h3','',r.resort.name));
+    const r=focused,d=r.day,card=make('article','map-selected-place'),head=make('div','map-selected-head'),name=make('div');card.id='map-selected-'+r.resort.id;card.tabIndex=-1;name.append(make('small','',r.resort.region+' · '+window.HaruNationalCatalog.elevation(r.resort)),make('h3','',r.resort.name));
     const fav=ctx.isFavorite(r.resort.id),star=button(fav?'★':'☆','favorite',r.resort.id,'star');star.setAttribute('aria-label',r.resort.name+(fav?'をお気に入りから外す':'をお気に入りにする'));star.setAttribute('aria-pressed',String(fav));head.append(name,star);card.append(head);
     if(hot.has(r.resort.id))card.append(make('p','hot-selected-label','🔥 激アツ候補 · 天気予報から選択'));
     card.append(make('p','map-selected-weather',E.weather(d?.code).icon+' '+E.weather(d?.code).label));const metrics=make('dl','map-selected-metrics');
@@ -86,7 +95,7 @@
     if(d?.flags?.length){const flags=make('div','flags');d.flags.forEach(t=>flags.append(make('span','flag',t)));card.append(flags);}
     card.append(button('この場所の詳細を見る','detail',r.resort.id,'map-detail-button'));root.append(card);
     const all=make('details','map-all-places');all.append(make('summary','','名前から選ぶ · '+ctx.entries.length+'地点'));const names=make('div','map-member-buttons');for(const entry of ctx.entries){const b=button(entry.resort.name,'map-select',entry.resort.id);b.setAttribute('aria-pressed',String(entry.resort.id===r.resort.id));names.append(b);}all.append(names);root.append(all);
-    root.append(make('p','map-locator-note','激アツ候補は、新雪・雲・風・雨の独自比較で75点以上の上位3地点。取得から6時間以上前・未取得・強風や雷雨などの予報は対象外です。営業中・雪質・滑走の安全性を保証する表示ではありません。'));
+    root.append(make('p','map-locator-note','激アツ候補は、取得済み予報を新雪・雲・風・雨で独自比較した75点以上の上位3地点。全国すべての予報を一括取得した順位ではありません。取得から6時間以上前・未取得・強風や雷雨などの予報は対象外です。営業中・雪質・滑走の安全性を保証する表示ではありません。'));
     updatePins(window.HaruMapViewport?.getState().scale||1,350);
     window.HaruMapViewport?.attach({board,land,pins,updatePins,controls:{out,inside,reset,level,hint},focused:focused.resort.id,scope:ctx.entries.map(r=>r.resort.id).join(',')});
     const credit=make('a','map-credit','地図データ：Natural Earth（海岸線を簡略化）');credit.href='https://www.naturalearthdata.com/about/terms-of-use/';credit.target='_blank';credit.rel='noopener noreferrer';root.append(credit);return root;

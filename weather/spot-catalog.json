@@ -8,14 +8,17 @@
       "courseUrl": "https://www.grand-hirafu.jp/snow/status/",
       "mapPage": "https://www.grand-hirafu.jp/download/",
       "mapIsPortal": false,
-      "mapFile": "https://www.grand-hirafu.jp/datas/files/2026/10/07/983fbe900f181d7ff43696aacb99e3d429827cbc.pdf"
+      "mapFile": "https://www.grand-hirafu.jp/datas/files/2026/10/07/983fbe900f181d7ff43696aacb99e3d429827cbc.pdf",
+      "adapter": "hirafu"
     },
     {
       "id": "rusutsu",
       "liftUrl": "https://rusutsu.com/lift-and-trail-status/",
       "courseUrl": "https://rusutsu.com/lift-and-trail-status/",
       "mapPage": "https://rusutsu.com/trail-map/",
-      "mapIsPortal": false
+      "mapIsPortal": false,
+      "adapter": "rusutsu",
+      "dataUrl": "https://rusutsu.com/assets/partial/ajax/trail-and-lift/get-front.php"
     },
     {
       "id": "kiroro",
@@ -144,10 +147,11 @@
     {
       "id": "okuibuki",
       "mapIsPortal": false,
-      "liftUrl": "https://www.okuibuki.co.jp/gelande/#lift",
-      "courseUrl": "https://www.okuibuki.co.jp/gelande/#lift_info",
+      "liftUrl": "https://www.okuibuki.co.jp/gelande/",
+      "courseUrl": "https://www.okuibuki.co.jp/gelande/",
       "mapPage": "https://www.okuibuki.co.jp/gelande/#map",
-      "mapFile": "https://www.okuibuki.co.jp/common/img/map/map.jpg"
+      "mapFile": "https://www.okuibuki.co.jp/common/img/map/map.jpg",
+      "adapter": "okuibuki"
     },
     {
       "id": "biwako",
@@ -169,7 +173,8 @@
       "mapIsPortal": false,
       "liftUrl": "https://charmant-hiuchi.jp/",
       "courseUrl": "https://charmant-hiuchi.jp/",
-      "mapPage": "https://charmant-hiuchi.jp/gelande/"
+      "mapPage": "https://charmant-hiuchi.jp/gelande/",
+      "adapter": "charmant"
     },
     {
       "id": "ishizuchi",

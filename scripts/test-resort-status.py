@@ -29,4 +29,33 @@ class StatusTests(unittest.TestCase):
         raw='<table><tr><td>架空</td><td>OPEN</td></tr><tr><td>架空</td><td>OPEN</td></tr></table><table><tr><td>コース</td><td>クローズ</td></tr></table>'
         with self.assertRaises(ValueError):m.parse(raw,'kiroro','lifts')
 
+    def test_hirafu_uses_one_language_and_not_snow_timestamp(self):
+        raw='<time datetime="2026-11-19T08:00">snow date</time><div class="p-status__lifts"><div class="p-status__lift"><h4 class="p-status__lift-name">架空リフト</h4><div class="p-status__lift-status">運休/閉鎖中</div></div></div><div class="p-status__lifts"><div class="p-status__lift"><h4 class="p-status__lift-name">Translated lift</h4><div class="p-status__lift-status">Operating</div></div></div>'
+        parsed=m.parse(raw,'hirafu','lifts');self.assertEqual(len(parsed['items']),1);self.assertEqual(parsed['items'][0]['status'],'closed');self.assertIsNone(parsed['sourceUpdatedAt'])
+    def test_hirafu_course_status_is_not_difficulty(self):
+        raw='<div class="p-status__courses"><div class="p-status__course-item"><p class="p-status__course-name">架空コース</p><p class="p-status__course-state">クローズ</p><p>初級</p></div></div>'
+        self.assertEqual(m.parse(raw,'hirafu','courses')['items'][0]['status'],'closed')
+    def test_rusutsu_public_json_keeps_real_update(self):
+        import json
+        raw=json.dumps({'other':{'update':'1775084662'},'lift':[{'nm':'架空リフト','stat':'運転中'}],'trail':{'a':[{'nm':'架空コース','stat':'クローズ'}]}})
+        self.assertEqual(m.parse(raw,'rusutsu','lifts')['items'][0]['status'],'open');self.assertTrue(m.parse(raw,'rusutsu','courses')['sourceUpdatedAt'].startswith('2026-04-01'))
+    def test_rusutsu_unknown_is_not_open(self):
+        import json
+        raw=json.dumps({'other':{'update':'bad'},'lift':[{'nm':'架空','stat':'未定義の状態'}]})
+        value=m.parse(raw,'rusutsu','lifts');self.assertEqual(value['items'][0]['status'],'unknown');self.assertIsNone(value['sourceUpdatedAt'])
+    def test_okuibuki_is_a_plan_and_empty_marker_is_unknown(self):
+        raw='<section class="lcl-lift"><p>2026/11/19 のリフト運行予定 （2026/11/18 17:00 更新）</p><li class="lcl-course-list__item"><h4 class="lcl-course__ttl">架空A</h4><span class="lcl-course__mark"></span></li><li class="lcl-course-list__item"><h4 class="lcl-course__ttl">架空B</h4><p>8:00〜17:00</p></li></section>'
+        value=m.parse(raw,'okuibuki','lifts');self.assertEqual(value['mode'],'planned');self.assertEqual(value['targetDate'],'2026-11-19');self.assertEqual(value['items'][0]['status'],'open');self.assertEqual(value['items'][1]['status'],'unknown')
+    def test_okuibuki_preparing_is_not_open(self):
+        raw='<section class="lcl-open-course"><li class="lcl-course-list__item"><h4 class="lcl-course__ttl">架空</h4><span class="lcl-course__prep">準備中</span></li></section>'
+        self.assertEqual(m.parse(raw,'okuibuki','courses')['items'][0]['status'],'closed')
+    def test_charmant_does_not_count_table_without_status(self):
+        raw='<p>2026/11/19 08:00 更新</p><table><tr><th>コース名</th><th>レベル</th><th>状況</th></tr><tr><td>架空A</td><td>中級</td><td>✕</td></tr></table><table><tr><th>コース名</th><th>レベル</th></tr><tr><td>架空B</td><td>上級</td></tr></table>'
+        value=m.parse(raw,'charmant','courses');self.assertEqual(len(value['items']),1);self.assertEqual(value['items'][0]['status'],'closed')
+    def test_new_adapters_missing_markup_fail(self):
+        for adapter in ['hirafu','okuibuki','charmant','rusutsu']:
+            with self.subTest(adapter=adapter):
+                with self.assertRaises((ValueError,KeyError,TypeError)):m.parse('<p>no status</p>',adapter,'lifts')
+
+
 if __name__=='__main__':unittest.main()

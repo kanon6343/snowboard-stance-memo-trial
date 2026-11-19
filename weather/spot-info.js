@@ -12,10 +12,10 @@
   function validate(data){
     if(data?.version!==1||!data.resorts||!Number.isFinite(Date.parse(data.generatedAt)))throw Error('形式不正');
     const result={version:1,generatedAt:data.generatedAt,resorts:{}};
-    for(const [id,entry]of Object.entries(data.resorts).slice(0,40)){
+    for(const [id,entry]of Object.entries(data.resorts).slice(0,800)){
       if(!/^[a-z][a-z0-9-]{0,39}$/.test(id)||!entry)continue;result.resorts[id]={};
       for(const kind of ['lifts','courses']){const value=entry[kind];if(!value||!safeUrl(value.sourceUrl))continue;
-        result.resorts[id][kind]={state:value.state==='ok'?'ok':'unavailable',sourceUrl:value.sourceUrl,checkedAt:value.checkedAt,sourceUpdatedAt:value.sourceUpdatedAt,
+        result.resorts[id][kind]={state:value.state==='ok'?'ok':'unavailable',sourceUrl:value.sourceUrl,checkedAt:value.checkedAt,sourceUpdatedAt:value.sourceUpdatedAt,mode:value.mode==='planned'?'planned':'actual',targetDate:value.targetDate,
           items:Array.isArray(value.items)?value.items.slice(0,120).filter(x=>x&&typeof x.name==='string'&&typeof x.label==='string').map(x=>({name:x.name.slice(0,100),label:x.label.slice(0,40),status:['open','closed','limited','outside'].includes(x.status)?x.status:'unknown'})):[]};
       }
     }return result;
@@ -38,6 +38,7 @@
   function sourceState(value){
     if(!value||value.state!=='ok'||!value.items?.length)return 'unavailable';
     const time=Date.parse(value.sourceUpdatedAt),checked=Date.parse(value.checkedAt),now=Date.now();
+    if(value.mode==='planned'){const today=new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Tokyo'}).format(now);return value.targetDate===today&&Number.isFinite(time)&&time<=now+300000&&Number.isFinite(checked)&&checked<=now+300000&&now-checked<=2*3600000&&now-time<=36*3600000&&navigator.onLine!==false?'planned':'old';}
     if(!Number.isFinite(time))return 'undated';
     if(!Number.isFinite(checked)||time>now+300000||checked>now+300000||now-time>6*3600000||now-checked>2*3600000||navigator.onLine===false)return 'old';
     return 'recent';
@@ -48,17 +49,17 @@
     const grid=node('div','operations-grid');
     for(const [kind,label,key]of[['courses','コース','courseUrl'],['lifts','リフト','liftUrl']]){
       const value=entry?.[kind],state=sourceState(value),card=node('section','operation-card'),heading=node('h4','',label);card.append(heading);
-      if(state==='unavailable')card.append(node('p','operation-summary','未取得'),node('p','info-small',info?.adapter?'掲載情報を取得できませんでした。公式で確認できます。':'アプリ内表示は準備中。公式で確認できます。'));
+      if(state==='unavailable')card.append(node('p','operation-summary','未取得'),node('p','info-small',info?.adapter?'掲載情報を取得できませんでした。取得日時と公式情報を確認してください。':'現在の運行・滑走可否は未取得です。下の基本情報の件数は営業中の本数ではありません。'));
       else{
         const open=value.items.filter(x=>x.status==='open').length,unknown=value.items.filter(x=>x.status==='unknown').length;
         const headline=unknown?open+'件 '+(kind==='lifts'?'運行の掲載':'滑走可の掲載')+'・不明'+unknown+'件':open+' / '+value.items.length+' '+(kind==='lifts'?'運行の掲載':'滑走可の掲載');
-        card.append(node('p','operation-summary',state==='recent'?headline:'掲載 '+value.items.length+'件'));
-        card.append(node('p','operation-age',state==='old'?'古い掲載・現在の状況は未確認':state==='undated'?'公式の更新日時が不明':'公式の掲載内容'));
+        card.append(node('p','operation-summary',state==='recent'?headline:state==='planned'?'当日の予定 '+value.items.length+'件':'掲載 '+value.items.length+'件'));
+        card.append(node('p','operation-age',state==='old'?'古い掲載・現在の状況は未確認':state==='undated'?'公式の更新日時が不明':state==='planned'?'当日の計画です。現在の運行・滑走可否は未確認':'公式の掲載内容'));
         const detail=node('details','operation-details'),summary=node('summary','','内訳を見る');detail.append(summary);const list=node('ul');
         for(const item of value.items){const li=node('li'),badge=node('span','operation-badge'+(state==='recent'?' '+item.status:''),item.label);li.append(node('span','',item.name),badge);list.append(li);}detail.append(list);card.append(detail);
         card.append(node('p','info-small','公式更新：'+stamp(value.sourceUpdatedAt)),node('p','info-small','取得：'+stamp(value.checkedAt)));
       }
-      card.append(link('公式で'+label+'状況を確認',info?.[key]||resort.official));grid.append(card);
+      card.append(link(info?.[key]||resort.official?'掲載サイトで'+label+'状況を確認':'地図の施設情報を確認',info?.[key]||resort.official||resort.sourceUrl));grid.append(card);
     }
     body.append(grid,node('p','info-small','指定日の予報ではなく、公式の直近掲載内容です。古い・日時不明の掲載から現在の営業状況は判断できません。'));
     if(loadFailed)body.append(node('p','operation-age','再取得できませんでした。保存済みの掲載と公式リンクを表示しています。'));
@@ -135,9 +136,9 @@
     if(current?.resort.id===resort.id){current.date=date;const ctx=current;queueMicrotask(()=>{drawMap(ctx);load();});return ctx.root;}
     releasePreview(current);
     const root=node('section','spot-information');root.dataset.resort=resort.id;
-    const operationsBox=node('section','operations-section');operationsBox.append(node('h3','','コース・リフト状況'),node('div','operations-body'));root.append(operationsBox);
+    const operationsBox=node('section','operations-section');operationsBox.append(node('h3','','コース・リフト状況'),node('div','operations-body'));root.append(operationsBox);if(window.HaruFacilityInfo)root.append(window.HaruFacilityInfo.create(resort));
     const map=node('section','map-section');map.append(node('h3','','ゲレンデマップ'),node('p','info-small','必要な場所だけ端末に保存。画像・PDFに対応します。'));
-    const actions=node('div','map-import-actions'),official=link('① 公式サイトでマップを探す',resort.official);official.classList.add('map-official');const label=node('label','map-file-label','② ファイルから保存'),input=node('input');input.type='file';input.accept='image/jpeg,image/png,image/webp,application/pdf';input.setAttribute('aria-label',resort.name+'のマップをファイルから保存');label.append(input);actions.append(official,label);map.append(actions,node('div','map-saved'));
+    const actions=node('div','map-import-actions'),official=link(resort.official?'① 登録サイトでマップを探す':'① 地図の施設情報を確認',resort.official||resort.sourceUrl);official.classList.add('map-official');const label=node('label','map-file-label','② ファイルから保存'),input=node('input');input.type='file';input.accept='image/jpeg,image/png,image/webp,application/pdf';input.setAttribute('aria-label',resort.name+'のマップをファイルから保存');label.append(input);actions.append(official,label);map.append(actions,node('div','map-saved'));
     const message=node('p','map-message');message.setAttribute('role','status');message.setAttribute('aria-live','polite');map.append(message);
     const help=node('details','map-help');help.append(node('summary','','保存について'));help.append(node('p','info-small','公式マップをダウンロードし、ファイルから取り込んでください。PDFの保存時は通信が必要です。初回は表示機能（約3.5MB）も取得します。ファイルは外部へ送信せず、この端末で画像化します。1ファイル25MB・PDF8ページまで。'));
     help.append(node('p','info-small','保存したマップは履歴のJSONバックアップには含まれません。元ファイルを残してください。ブラウザのデータ削除や空き容量不足で消えることがあります。'));
