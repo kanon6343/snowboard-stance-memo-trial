@@ -15,3 +15,8 @@
 .map-zoom-controls button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 .map-zoom-level{min-width:56px;text-align:center;color:var(--ink);font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
 .map-gesture-hint{margin:0 auto 10px;max-width:620px;font-size:12px;line-height:1.7;color:var(--muted)}
+
+.map-pin-name{display:none;position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);width:max-content;max-width:130px;border:1px solid var(--line);border-radius:7px;padding:5px 7px;background:var(--card);color:var(--ink);font-size:12px;line-height:1.4;font-weight:700;white-space:normal;pointer-events:none;box-shadow:0 2px 6px #122d3b22}
+.map-location.is-selected .map-pin-name,.map-location:focus-visible .map-pin-name{display:block}
+.map-location.is-selected{z-index:3}
+@media(hover:hover){.map-location:hover{z-index:4}.map-location:hover .map-pin-name{display:block}}

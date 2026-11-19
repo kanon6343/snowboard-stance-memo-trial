@@ -12,18 +12,20 @@
     if(camera.scale<1.001){camera.scale=1;camera.x=0;camera.y=0;}
   }
   function detach(){if(active){active();active=null;}}
-  function attach({board,land,pins,controls,focused,scope}){
+  function attach({board,land,pins,controls,focused,scope,updatePins}){
     detach();
     let gesture=null,mouse=null,frame=null,suppressUntil=0;
     const cleanup=[];
     const listen=(node,event,fn,options)=>{node.addEventListener(event,fn,options);cleanup.push(()=>node.removeEventListener(event,fn,options));};
-    const size=()=>{const r=board.getBoundingClientRect();return {left:r.left,top:r.top,width:r.width||350,height:r.height||390};};
+    const size=()=>{const r=board.getBoundingClientRect?.()||{};return {left:r.left||0,top:r.top||0,width:r.width||350,height:r.height||390};};
     const local=point=>{const r=size();return {x:(point.clientX-r.left)*WIDTH/r.width,y:(point.clientY-r.top)*HEIGHT/r.height};};
     const cancel=event=>{if(event.cancelable)event.preventDefault();event.stopPropagation();};
     const blocked=()=>{suppressUntil=Date.now()+500;};
     const move=(x,y)=>{camera.x=x;camera.y=y;bound();schedule();};
     function paint(){
       frame=null;bound();
+      // Keep touch targets attached until every finger has been lifted.
+      if(!gesture&&!mouse&&updatePins)pins=updatePins(camera.scale,size().width);
       land.setAttribute('viewBox',[-camera.x/camera.scale,-camera.y/camera.scale,WIDTH/camera.scale,HEIGHT/camera.scale].join(' '));
       board.dataset.zoomed=String(camera.scale>1);
       board.setAttribute('aria-label','スキー場の地図、拡大率'+Math.round(camera.scale*100)+'パーセント。2本指で拡大縮小、拡大中は1本指で移動できます。');
@@ -73,11 +75,11 @@
     listen(board,'touchend',event=>{
       const points=touches(event),wasPinch=gesture?.kind==='pinch',wasTap=gesture?.kind==='pan'&&gesture.prevented&&!gesture.moved;
       if(wasPinch||gesture?.moved){blocked();cancel(event);}
-      begin(points);
+      begin(points);schedule();
       // A tap in zoomed mode was prevented at touchstart; activate that pin once.
       if(!points.length&&wasTap&&Date.now()>=suppressUntil){const pin=event.target.closest?.('.map-location');if(pin){cancel(event);pin.click();}}
     },{passive:false});
-    listen(board,'touchcancel',()=>{gesture=null;blocked();},{passive:true});
+    listen(board,'touchcancel',()=>{gesture=null;blocked();schedule();},{passive:true});
     // Mouse/pen dragging uses pointer capture; touchscreen gestures use Touch Events.
     listen(board,'pointerdown',event=>{
       if(event.pointerType==='touch'||event.button!==0)return;
@@ -90,7 +92,7 @@
       if(!mouse.moved&&Math.hypot(dx*size().width/WIDTH,dy*size().height/HEIGHT)>6){mouse.moved=true;try{board.setPointerCapture?.(event.pointerId);}catch{}}
       if(mouse.moved){move(mouse.x+dx,mouse.y+dy);blocked();cancel(event);}
     });
-    const endPointer=event=>{if(mouse?.id!==event.pointerId)return;if(mouse.moved)blocked();mouse=null;try{board.releasePointerCapture?.(event.pointerId);}catch{}};
+    const endPointer=event=>{if(mouse?.id!==event.pointerId)return;if(mouse.moved)blocked();mouse=null;schedule();try{board.releasePointerCapture?.(event.pointerId);}catch{}};
     listen(board,'pointerup',endPointer);listen(board,'pointercancel',endPointer);listen(board,'lostpointercapture',()=>{mouse=null;});
     listen(board,'click',event=>{if(event.detail!==0&&Date.now()<suppressUntil){event.preventDefault();event.stopImmediatePropagation();}},true);
     listen(controls.inside,'click',()=>scaleAt(camera.scale*1.4));
@@ -102,6 +104,7 @@
       else if(camera.scale>1&&['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key)){event.preventDefault();move(camera.x+(event.key==='ArrowLeft'?70:event.key==='ArrowRight'?-70:0),camera.y+(event.key==='ArrowUp'?78:event.key==='ArrowDown'?-78:0));}
     });
     listen(board,'focusin',event=>{const pin=pins.find(p=>p.node===event.target);if(pin){ensureVisible(pin);if(frame!==null)window.cancelAnimationFrame?.(frame);paint();}});
+    listen(window,'resize',schedule);
     // Keep the same camera on forecasts, dates and pin selections; reveal a new area.
     if(focused!==lastFocus||scope!==lastScope)ensureVisible(pins.find(p=>p.selected));
     lastFocus=focused;lastScope=scope;paint();
