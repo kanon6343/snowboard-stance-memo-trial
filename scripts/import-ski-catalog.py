@@ -53,6 +53,8 @@ for feature in eligible:
     legacy=next((r for r in old if r['id']==identifier),None)
     item={'id':identifier,'name':legacy['name'] if legacy else nice_name(prop['name']),'region':region,'lat':round(center[1],6),'lon':round(center[0],6),'elevation':elevation,'official':official,'sourceUrl':source_url(prop),'aliases':prop['name'],'locality':place.get('localized',{}).get('en',{}).get('locality') or '', 'sourceStatus':prop.get('status') or 'unknown'}
     if legacy:item.update({k:legacy[k] for k in ['lat','lon','elevation','official']});item['legacy']=True
+    
+    if identifier=='okuibuki':item['region']='滋賀' # Operator address; see weather/AREA-GUIDE.md
     items.append(item);profiles[identifier]={'sourceUrl':item['sourceUrl'],'sourceName':prop['name'],'elevationMin':lo,'elevationMax':hi,'lifts':[],'courses':[],'unnamedCourseSegments':0}
     mapping[upstream]=identifier
 for legacy in old:

@@ -7,22 +7,22 @@
   <title>雪山の天気 | スタンスメモ 試作</title>
   <meta name="description" content="スキー場の7日間の天気、新雪、風を比べて、次に滑る場所の候補を探します。">
   <link rel="icon" href="../icons/icon-trial-192.png" type="image/png">
-  <link rel="stylesheet" href="weather.css?v=1104">
-  <link rel="stylesheet" href="views.css?v=1104">
-  <link rel="stylesheet" href="national-map.css?v=1104">
-  <link rel="stylesheet" href="spot-info.css?v=1104">
-  <script src="../theme.js?v=1104"></script>
-  <script src="national-catalog.js?v=1104" defer></script>
-  <script src="facility-info.js?v=1104" defer></script>
-  <script src="engine.js?v=1104" defer></script>
-  <script src="map-store.js?v=1104" defer></script>
-  <script src="map-pdf.js?v=1104" defer></script>
-  <script src="spot-info.js?v=1104" defer></script>
-  <script src="japan-outline.js?v=1104" defer></script>
-  <script src="map-viewport.js?v=1104" defer></script>
-  <script src="national-map.js?v=1104" defer></script>
-  <script src="views.js?v=1104" defer></script>
-  <script src="app.js?v=1104" defer></script>
+  <link rel="stylesheet" href="weather.css?v=1105">
+  <link rel="stylesheet" href="views.css?v=1105">
+  <link rel="stylesheet" href="national-map.css?v=1105">
+  <link rel="stylesheet" href="spot-info.css?v=1105">
+  <script src="../theme.js?v=1105"></script>
+  <script src="national-catalog.js?v=1105" defer></script>
+  <script src="facility-info.js?v=1105" defer></script>
+  <script src="engine.js?v=1105" defer></script>
+  <script src="map-store.js?v=1105" defer></script>
+  <script src="map-pdf.js?v=1105" defer></script>
+  <script src="spot-info.js?v=1105" defer></script>
+  <script src="japan-outline.js?v=1105" defer></script>
+  <script src="map-viewport.js?v=1105" defer></script>
+  <script src="national-map.js?v=1105" defer></script>
+  <script src="views.js?v=1105" defer></script>
+  <script src="app.js?v=1105" defer></script>
 </head>
 <body>
 <a class="skip" href="#results">予報一覧へ</a>
@@ -35,7 +35,14 @@
   <section class="controls" aria-label="比較する条件">
     <label class="catalog-search-label" for="resortSearch">スキー場を探す<input id="resortSearch" type="search" placeholder="名前・都道府県・地域で検索" autocomplete="off"></label>
     <p class="catalog-scope-note" id="catalogScope"></p>
-    <div class="filter-row"><label class="region-label" for="region">行くエリア<select id="region"><option value="all">すべてのエリア</option></select></label><button id="favoritesOnly" class="favorite-filter" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button></div>
+    <div class="location-filters" aria-label="行くエリアを絞る">
+      <label class="location-label" for="area">地方<select id="area"><option value="all">全国</option></select></label>
+      <label class="location-label" for="region">都道府県<select id="region"><option value="all">すべての都道府県</option></select></label>
+      <label class="location-label detail-location-label" for="detailArea">詳細エリア<select id="detailArea" aria-describedby="locationHelp"><option value="all">都道府県を選択</option></select></label>
+      <button id="favoritesOnly" class="favorite-filter" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button>
+    </div>
+    <p class="location-summary" id="locationSummary" role="status" aria-live="polite"></p>
+    <p class="location-help" id="locationHelp">地方だけ、都道府県まででも探せます。<a href="AREA-GUIDE.md" target="_blank" rel="noopener noreferrer">エリアの分け方</a></p>
     <nav class="layout-tabs" id="layoutTabs" role="tablist" aria-label="天気の表示方法"><button type="button" id="layout-list" role="tab" data-view="list" aria-selected="true" aria-controls="resorts">一覧</button><button type="button" id="layout-map" role="tab" data-view="map" aria-selected="false" aria-controls="resorts" tabindex="-1">全国マップ</button><button type="button" id="layout-compare" role="tab" data-view="compare" aria-selected="false" aria-controls="resorts" tabindex="-1">比較</button><button type="button" id="layout-spot" role="tab" data-view="spot" aria-selected="false" aria-controls="resorts" tabindex="-1">詳細</button></nav>
     <div id="dateControls"><p class="control-label">滑る日</p><div class="date-strip" id="dates" role="group" aria-label="滑る日"></div></div>
     <div class="priorities" id="priorities" role="group" aria-label="重視すること"><button type="button" data-mode="balanced" aria-pressed="true">バランス</button><button type="button" data-mode="snow" aria-pressed="false">新雪重視</button><button type="button" data-mode="sun" aria-pressed="false">晴れ重視</button></div>

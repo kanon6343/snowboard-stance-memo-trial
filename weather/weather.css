@@ -9,3 +9,13 @@
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 
 .catalog-search-label{display:grid;gap:7px;font-weight:700;font-size:14px;margin-bottom:8px}.catalog-search-label input{width:100%;min-height:48px;box-sizing:border-box;border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:var(--card);color:var(--ink);font:inherit;font-size:16px}.catalog-scope-note{font-size:12px;color:var(--muted);line-height:1.7;margin:7px 0 12px}.catalog-more{display:block;width:100%;min-height:48px;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--card);color:var(--ink);font:inherit}.catalog-credits{font-size:12px;line-height:1.8;color:var(--muted);margin:18px 0}.catalog-credits summary{min-height:40px;align-content:center;cursor:pointer}.catalog-credits a{color:var(--blue)}.spot-picker select{width:100%;font:inherit;min-height:48px;border-radius:10px;border:1px solid var(--line);padding:10px;background:var(--card);color:var(--ink)}
+
+/* Three levels, with room for readable labels on phones. */
+.location-filters{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:end;margin:8px 0 4px}
+.location-label{display:block;min-width:0;font-size:12px;font-weight:700;color:var(--muted)}
+.location-label select{display:block;width:100%;min-width:0;min-height:44px;margin-top:4px;border:1px solid var(--line);border-radius:11px;padding:9px 24px 9px 10px;background:var(--soft);color:var(--ink);font:inherit;font-size:14px;text-overflow:ellipsis}
+.location-label select:disabled{color:var(--muted);opacity:.7}
+.location-filters .favorite-filter{min-height:44px;margin:0;justify-self:stretch;white-space:nowrap}
+.location-summary{font-size:12px;font-weight:650;color:var(--ink);margin:8px 0 2px;overflow-wrap:anywhere}
+.location-help{font-size:11px;line-height:1.7;color:var(--muted);margin:0 0 14px}.location-help a{white-space:nowrap}
+@media(min-width:700px){.location-filters{grid-template-columns:minmax(100px,1fr) minmax(120px,1fr) minmax(180px,1.5fr) auto;gap:12px}.location-label{font-size:13px}}
