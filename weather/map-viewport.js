@@ -1,7 +1,7 @@
 /* Small SVG camera. No tiles, dependencies, requests or persistent data. */
 (() => {
   'use strict';
-  const WIDTH=700,HEIGHT=780,MAX=4,MIN=1;
+  const WIDTH=700,HEIGHT=780,MAX=10,MIN=1;
   const camera={scale:1,x:0,y:0};
   let active=null,lastFocus='',lastScope='';
   const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));

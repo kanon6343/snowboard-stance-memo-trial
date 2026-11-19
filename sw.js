@@ -1,7 +1,7 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1101';
-const APP_VERSION = '2.11.0';
-const RELEASE_NOTES = ["全国マップを拡大すると、まとめたピンが段階的に分かれるようになりました。最大付近では24地点を個別に選べます。","縮小すると再びまとまります。ピンチ中は操作を保ち、指を離した時にピンを切り替えます。"];
+const RELEASE = '1102';
+const APP_VERSION = '2.11.1';
+const RELEASE_NOTES = ["全国マップの最大拡大率を1000％（10倍）へ広げました。ピンチと＋・−ボタンの両方で操作できます。","拡大時の個別ピン、移動、全体へ戻る操作はそのまま使えます。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
