@@ -36,6 +36,34 @@
     const unclassified=scope.prefecture!=='all'&&resorts.some(r=>r.region===scope.prefecture&&!detailFor(r));
     return {areas,prefectures,details,unclassified};
   }
+  const MAX_CANDIDATES=8;
+  const candidateToken=item=>item.prefecture+'~'+item.detailArea;
+  const candidateKey=items=>'candidates:'+items.map(candidateToken).sort().join('+');
+  const candidateLabel=item=>item.detailArea==='all'?item.prefecture:item.prefecture+'：'+(item.detailArea==='other'?'その他・未分類':detailById.get(item.detailArea)?.label||'');
+  const candidateMatches=(resort,item)=>resort.region===item.prefecture&&matchesDetail(resort,item.detailArea);
+  function validCandidate(value,resorts){
+    if(!value||typeof value!=='object'||Array.isArray(value)||typeof value.prefecture!=='string')return null;
+    const detailArea=value.detailArea===undefined?'all':value.detailArea;
+    if(typeof detailArea!=='string')return null;
+    const scope=normalizeScope({area:'all',prefecture:value.prefecture,detailArea},resorts);
+    return scope.prefecture!=='all'&&scope.prefecture===value.prefecture&&scope.detailArea===detailArea?{prefecture:scope.prefecture,detailArea}:null;
+  }
+  function addCandidate(current,value,resorts){
+    const item=validCandidate(value,resorts);if(!item)return {items:current,status:'invalid'};
+    if(current.some(x=>x.prefecture===item.prefecture&&(x.detailArea==='all'||x.detailArea===item.detailArea)))return {items:current,status:'covered'};
+    const next=item.detailArea==='all'?current.filter(x=>x.prefecture!==item.prefecture):current.slice();
+    if(next.length>=MAX_CANDIDATES)return {items:current,status:'limit'};
+    return {items:[...next,item],status:'added'};
+  }
+  function normalizeCandidates(value,resorts){
+    let items=[];for(const entry of Array.isArray(value)?value.slice(0,100):[])items=addCandidate(items,entry,resorts).items;return items;
+  }
+  function candidateResorts(resorts,items){
+    const lists=items.map(item=>resorts.filter(resort=>candidateMatches(resort,item))),seen=new Set(),out=[];
+    // Interleave selected areas so the first bounded forecast batch includes each.
+    for(let i=0;i<Math.max(0,...lists.map(x=>x.length));i++)for(const list of lists){const r=list[i];if(r&&!seen.has(r.id)){seen.add(r.id);out.push(r);}}
+    return out;
+  }
   const norm=value=>String(value||'').normalize('NFKC').toLocaleLowerCase('ja').replace(/[\s・ー_-]/g,'');
   const matchesRegion=(resort,region)=>region==='all'||resort.region===region||AREAS[region]?.includes(resort.region);
   const matches=(resort,query)=>!query||norm([resort.name,resort.aliases,resort.region,resort.locality,detailLabel(resort)].join(' ')).includes(norm(query));
@@ -49,5 +77,5 @@
     const note=document.createElement('p');note.textContent='OpenSkiDataの日本の下り系施設から、廃止扱い・名称未登録を除いて収録。現在の営業を保証する一覧ではなく、収録漏れ・重複・休止施設が含まれる可能性があります。';box.append(note);
     for(const [label,href]of [['OpenSkiData / OpenSkiMap.org','https://www.openskidata.org/'],['© OpenStreetMap contributors（ODbL）','https://www.openstreetmap.org/copyright'],['Skimap.org','https://skimap.org/'],["Who's On First",'https://whosonfirst.org/'],['© Mapterhorn','https://mapterhorn.com/'],['加工データ・ライセンス','DATA-LICENSE.md']]){const a=document.createElement('a');a.textContent=label;a.href=href;a.target='_blank';a.rel='noopener noreferrer';box.append(a,document.createTextNode(' · '));}return wrapper;
   }
-  window.HaruNationalCatalog={AREAS,DETAIL_AREAS,areaFor,detailFor,detailLabel,matchesDetail,normalizeScope,scopeOptions,matchesRegion,matches,elevation,url,websiteLabel,credits,PAGE_SIZE:40,MAX_FORECAST:40};
+  window.HaruNationalCatalog={AREAS,MAX_CANDIDATES,candidateToken,candidateKey,candidateLabel,candidateMatches,addCandidate,normalizeCandidates,candidateResorts,DETAIL_AREAS,areaFor,detailFor,detailLabel,matchesDetail,normalizeScope,scopeOptions,matchesRegion,matches,elevation,url,websiteLabel,credits,PAGE_SIZE:40,MAX_FORECAST:40};
 })();

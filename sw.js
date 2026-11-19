@@ -1,7 +1,7 @@
 /* Release shell: bump RELEASE and every versioned index.html asset together. */
-const RELEASE = '1105';
-const APP_VERSION = '2.12.1';
-const RELEASE_NOTES = ["行くエリアを「地方・都道府県・詳細エリア」の3段階で選べるようにしました。", "湯沢・南魚沼、飛騨、奥美濃、白馬などで絞り込み。一覧・地図・比較・詳細で同じ条件を使えます。", "以前の地域選択やお気に入りは引き継ぎ、未分類のスキー場も引き続き探せます。"];
+const RELEASE = '1106';
+const APP_VERSION = '2.13.0';
+const RELEASE_NOTES = ["県や詳細エリアを複数の候補に追加して、地方をまたいでまとめて探せるようになりました。", "長野＋岐阜、岐阜＋滋賀＋兵庫＋鳥取など最大8エリア。一覧・地図・比較・詳細で候補を共用します。", "候補は端末に保存。同じ場所の重複をまとめ、予報は候補の地点を交互に選び、合計40地点までずつ確認します。"];
 const BASE = new URL('./', self.registration.scope);
 const CACHE_PREFIX = `snowboard-stance-haru-detail:${BASE.href}:`;
 const CACHE_NAME = `${CACHE_PREFIX}${RELEASE}`;
