@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-25T16:02:24+00:00",
+  "generatedAt": "2026-11-26T00:39:21+00:00",
   "resorts": {
     "hirafu": {
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://www.grand-hirafu.jp/snow/status/",
-        "checkedAt": "2026-11-25T16:02:24+00:00",
+        "checkedAt": "2026-11-26T00:39:21+00:00",
         "sourceUpdatedAt": null,
         "items": [
           {
@@ -59,7 +59,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://www.grand-hirafu.jp/snow/status/",
-        "checkedAt": "2026-11-25T16:02:24+00:00",
+        "checkedAt": "2026-11-26T00:39:21+00:00",
         "sourceUpdatedAt": null,
         "items": [
           {
@@ -179,7 +179,7 @@
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://rusutsu.com/lift-and-trail-status/",
-        "checkedAt": "2026-11-25T16:02:24+00:00",
+        "checkedAt": "2026-11-26T00:39:21+00:00",
         "sourceUpdatedAt": "2026-04-01T23:04:22+00:00",
         "items": [
           {
@@ -277,7 +277,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://rusutsu.com/lift-and-trail-status/",
-        "checkedAt": "2026-11-25T16:02:24+00:00",
+        "checkedAt": "2026-11-26T00:39:21+00:00",
         "sourceUpdatedAt": "2026-04-01T23:04:22+00:00",
         "items": [
           {
@@ -587,7 +587,7 @@
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://www.kiroro.co.jp/ja/guide_map/",
-        "checkedAt": "2026-11-25T16:02:24+00:00",
+        "checkedAt": "2026-11-26T00:39:21+00:00",
         "sourceUpdatedAt": "2026-10-13T16:46+09:00",
         "items": [
           {
@@ -640,7 +640,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://www.kiroro.co.jp/ja/guide_map/",
-        "checkedAt": "2026-11-25T16:02:24+00:00",
+        "checkedAt": "2026-11-26T00:39:21+00:00",
         "sourceUpdatedAt": "2026-10-13T16:46+09:00",
         "items": [
           {
@@ -770,7 +770,7 @@
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://www.marunuma.jp/winter/status/",
-        "checkedAt": "2026-11-25T16:02:24+00:00",
+        "checkedAt": "2026-11-26T00:39:21+00:00",
         "sourceUpdatedAt": null,
         "items": [
           {
@@ -818,7 +818,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://www.marunuma.jp/winter/status/",
-        "checkedAt": "2026-11-25T16:02:24+00:00",
+        "checkedAt": "2026-11-26T00:39:21+00:00",
         "sourceUpdatedAt": null,
         "items": [
           {
@@ -918,8 +918,8 @@
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://www.happo-one.jp/gelande/lift/",
-        "checkedAt": "2026-11-25T16:02:24+00:00",
-        "sourceUpdatedAt": "2026-11-25T09:42+09:00",
+        "checkedAt": "2026-11-26T00:39:21+00:00",
+        "sourceUpdatedAt": "2026-11-26T08:07+09:00",
         "items": [
           {
             "name": "グラートクワッド",
@@ -1021,7 +1021,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://www.happo-one.jp/gelande/condition/",
-        "checkedAt": "2026-11-25T16:02:24+00:00",
+        "checkedAt": "2026-11-26T00:39:21+00:00",
         "sourceUpdatedAt": "2026-11-23T07:28+09:00",
         "items": [
           {
@@ -1196,7 +1196,7 @@
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://www.okuibuki.co.jp/gelande/",
-        "checkedAt": "2026-11-25T16:02:24+00:00",
+        "checkedAt": "2026-11-26T00:39:21+00:00",
         "sourceUpdatedAt": "2026-11-25T17:00+09:00",
         "items": [
           {
@@ -1256,7 +1256,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://www.okuibuki.co.jp/gelande/",
-        "checkedAt": "2026-11-25T16:02:24+00:00",
+        "checkedAt": "2026-11-26T00:39:21+00:00",
         "sourceUpdatedAt": "2026-11-25T17:00+09:00",
         "items": [
           {
@@ -1338,7 +1338,7 @@
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://charmant-hiuchi.jp/",
-        "checkedAt": "2026-11-25T16:02:24+00:00",
+        "checkedAt": "2026-11-26T00:39:21+00:00",
         "sourceUpdatedAt": "2026-11-07T11:08+09:00",
         "items": [
           {
@@ -1361,7 +1361,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://charmant-hiuchi.jp/",
-        "checkedAt": "2026-11-25T16:02:24+00:00",
+        "checkedAt": "2026-11-26T00:39:21+00:00",
         "sourceUpdatedAt": "2026-11-07T11:08+09:00",
         "items": [
           {
