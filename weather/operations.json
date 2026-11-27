@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-27T11:23:36+00:00",
+  "generatedAt": "2026-11-27T20:17:09+00:00",
   "resorts": {
     "hirafu": {
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://www.grand-hirafu.jp/snow/status/",
-        "checkedAt": "2026-11-27T11:23:36+00:00",
+        "checkedAt": "2026-11-27T20:17:09+00:00",
         "sourceUpdatedAt": null,
         "items": [
           {
@@ -59,7 +59,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://www.grand-hirafu.jp/snow/status/",
-        "checkedAt": "2026-11-27T11:23:36+00:00",
+        "checkedAt": "2026-11-27T20:17:09+00:00",
         "sourceUpdatedAt": null,
         "items": [
           {
@@ -179,7 +179,7 @@
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://rusutsu.com/lift-and-trail-status/",
-        "checkedAt": "2026-11-27T11:23:36+00:00",
+        "checkedAt": "2026-11-27T20:17:09+00:00",
         "sourceUpdatedAt": "2026-04-01T23:04:22+00:00",
         "items": [
           {
@@ -277,7 +277,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://rusutsu.com/lift-and-trail-status/",
-        "checkedAt": "2026-11-27T11:23:36+00:00",
+        "checkedAt": "2026-11-27T20:17:09+00:00",
         "sourceUpdatedAt": "2026-04-01T23:04:22+00:00",
         "items": [
           {
@@ -585,25 +585,192 @@
     },
     "kiroro": {
       "lifts": {
-        "state": "unavailable",
+        "state": "ok",
         "sourceUrl": "https://www.kiroro.co.jp/ja/guide_map/",
-        "checkedAt": "2026-11-27T11:23:36+00:00",
-        "sourceUpdatedAt": null,
-        "items": []
+        "checkedAt": "2026-11-27T20:17:09+00:00",
+        "sourceUpdatedAt": "2026-11-27T10:30+09:00",
+        "items": [
+          {
+            "name": "キロロゴンドラ",
+            "status": "limited",
+            "label": "SUSPENDED"
+          },
+          {
+            "name": "朝里第２エクスプレス",
+            "status": "limited",
+            "label": "SUSPENDED"
+          },
+          {
+            "name": "余市第１エクスプレス",
+            "status": "limited",
+            "label": "SUSPENDED"
+          },
+          {
+            "name": "余市第２リフト",
+            "status": "limited",
+            "label": "SUSPENDED"
+          },
+          {
+            "name": "センターエクスプレス",
+            "status": "limited",
+            "label": "SUSPENDED"
+          },
+          {
+            "name": "長峰第１エクスプレス",
+            "status": "limited",
+            "label": "SUSPENDED"
+          },
+          {
+            "name": "長峰第２エクスプレス",
+            "status": "limited",
+            "label": "SUSPENDED"
+          },
+          {
+            "name": "ファミリーリフト",
+            "status": "limited",
+            "label": "SUSPENDED"
+          },
+          {
+            "name": "ゲートウェイエクスプレス",
+            "status": "limited",
+            "label": "SUSPENDED"
+          }
+        ]
       },
       "courses": {
-        "state": "unavailable",
+        "state": "ok",
         "sourceUrl": "https://www.kiroro.co.jp/ja/guide_map/",
-        "checkedAt": "2026-11-27T11:23:36+00:00",
-        "sourceUpdatedAt": null,
-        "items": []
+        "checkedAt": "2026-11-27T20:17:09+00:00",
+        "sourceUpdatedAt": "2026-11-27T10:30+09:00",
+        "items": [
+          {
+            "name": "朝里ダイナミック",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "エキスパートA",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "エキスパートB",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "朝里パノラマ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "朝里第１-Ａ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "朝里第１-Ｂ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "朝里第２-Ａ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "朝里第２-Ｂ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "朝里第２-Ｃ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "余市第１-Ａ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "余市第１-Ｂ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "余市第２-Ａ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "余市第２-Ｂ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "センターＡ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "センターＢ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "センターＣ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "長峰第１",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "長峰第２-Ａ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "長峰第２-Ｂ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "長峰第２-Ｃ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ファミリーコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "センターリンク",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ゲートウェイコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "パウダーライド",
+            "status": "closed",
+            "label": "クローズ"
+          }
+        ]
       }
     },
     "marunuma": {
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://www.marunuma.jp/winter/status/",
-        "checkedAt": "2026-11-27T11:23:36+00:00",
+        "checkedAt": "2026-11-27T20:17:09+00:00",
         "sourceUpdatedAt": null,
         "items": [
           {
@@ -651,7 +818,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://www.marunuma.jp/winter/status/",
-        "checkedAt": "2026-11-27T11:23:36+00:00",
+        "checkedAt": "2026-11-27T20:17:09+00:00",
         "sourceUpdatedAt": null,
         "items": [
           {
@@ -749,41 +916,429 @@
     },
     "happo": {
       "lifts": {
-        "state": "unavailable",
+        "state": "ok",
         "sourceUrl": "https://www.happo-one.jp/gelande/lift/",
-        "checkedAt": "2026-11-27T11:23:36+00:00",
-        "sourceUpdatedAt": null,
-        "items": []
+        "checkedAt": "2026-11-27T20:17:09+00:00",
+        "sourceUpdatedAt": "2026-11-27T15:37+09:00",
+        "items": [
+          {
+            "name": "グラートクワッド",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "アルペンクワッド",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "兎平ペア",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "八方リーゼンクワッド",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "名木山第2ペア",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "名木山第3トリプル",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "八方尾根ゴンドラリフト「アダム」",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "白樺第1ペア",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "白樺第2ペア",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "パノラマペア",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "国際第1ペア",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "国際第3ペア",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "黒菱第2クワッド",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "黒菱第3ペア",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "スカイライン第2ペア",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "咲花第2ペア",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "咲花第3トリプル",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "咲花北尾根クワッド",
+            "status": "outside",
+            "label": "－"
+          },
+          {
+            "name": "北尾根第3ペア",
+            "status": "outside",
+            "label": "－"
+          }
+        ]
       },
       "courses": {
-        "state": "unavailable",
+        "state": "ok",
         "sourceUrl": "https://www.happo-one.jp/gelande/condition/",
-        "checkedAt": "2026-11-27T11:23:36+00:00",
-        "sourceUpdatedAt": null,
-        "items": []
+        "checkedAt": "2026-11-27T20:17:09+00:00",
+        "sourceUpdatedAt": "2026-11-23T07:28+09:00",
+        "items": [
+          {
+            "name": "リーゼングラートコース",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "黒菱ゲレンデ",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "兎平ゲレンデ",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "スカイラインコース",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "展望コース",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "裏黒コース 上部",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "裏黒コース 下部",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "おむすびコース",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "リーゼンスラロームコース",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "ウスバ迂回路",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "パノラマコース",
+            "status": "open",
+            "label": "○"
+          },
+          {
+            "name": "セントラルコース",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "オリンピックコースII",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "パノラマ林道",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "グランピングエリア",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "HAPPO PARKS",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "北尾根林道",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "北尾根急斜面 上段・中段",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "北尾根急斜面 下段",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "北尾根新コース",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "咲花ウェーブ",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "オリンピックコースI",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "名木山ゲレンデ南",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "ウスバ下部",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "名木山ゲレンデ壁",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "名木山ゲレンデ北",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "なきやまスノーランド",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "白樺ゲレンデ南 上部",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "白樺ゲレンデ南 下部",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "白樺ゲレンデ北",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "国際 下部",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "咲花ゲレンデ南",
+            "status": "closed",
+            "label": "Ｘ"
+          },
+          {
+            "name": "咲花ゲレンデ北",
+            "status": "closed",
+            "label": "Ｘ"
+          }
+        ]
       }
     },
     "okuibuki": {
       "lifts": {
-        "state": "unavailable",
+        "state": "ok",
         "sourceUrl": "https://www.okuibuki.co.jp/gelande/",
-        "checkedAt": "2026-11-27T11:23:36+00:00",
-        "sourceUpdatedAt": null,
-        "items": []
+        "checkedAt": "2026-11-27T20:17:09+00:00",
+        "sourceUpdatedAt": "2026-11-27T17:00+09:00",
+        "items": [
+          {
+            "name": "ファミリーペア",
+            "status": "open",
+            "label": "運行予定"
+          },
+          {
+            "name": "モンブランペア",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "バラエティークワッド",
+            "status": "open",
+            "label": "運行予定"
+          },
+          {
+            "name": "チャンピオントリプル",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "パラダイスペアA線・B線",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "チャレンジペア",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "天狗岩ペア",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "スカイビューペア",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "トンネル付動く歩道（グリーン）",
+            "status": "open",
+            "label": "運行予定"
+          },
+          {
+            "name": "トンネル付動く歩道（オレンジ）",
+            "status": "unknown",
+            "label": "予定未確認"
+          }
+        ],
+        "mode": "planned",
+        "targetDate": "2026-11-28"
       },
       "courses": {
-        "state": "unavailable",
+        "state": "ok",
         "sourceUrl": "https://www.okuibuki.co.jp/gelande/",
-        "checkedAt": "2026-11-27T11:23:36+00:00",
-        "sourceUpdatedAt": null,
-        "items": []
+        "checkedAt": "2026-11-27T20:17:09+00:00",
+        "sourceUpdatedAt": "2026-11-27T17:00+09:00",
+        "items": [
+          {
+            "name": "ビギナーゲレンデ",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "ファミリーゲレンデ",
+            "status": "open",
+            "label": "滑走可予定"
+          },
+          {
+            "name": "バラエティーゲレンデ",
+            "status": "open",
+            "label": "滑走可予定"
+          },
+          {
+            "name": "パラダイスゲレンデ",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "テクニカルコース",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "ダイナミックコース",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "アルペンコースコース",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "チャレンジコース",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "天狗岩コース",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "スカイビューコース",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "モンブラン",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "チャンピオンコース",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "Heavenly46°",
+            "status": "unknown",
+            "label": "予定未確認"
+          },
+          {
+            "name": "キッズパーク",
+            "status": "unknown",
+            "label": "予定未確認"
+          }
+        ],
+        "mode": "planned",
+        "targetDate": "2026-11-28"
       }
     },
     "charmant": {
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://charmant-hiuchi.jp/",
-        "checkedAt": "2026-11-27T11:23:36+00:00",
+        "checkedAt": "2026-11-27T20:17:09+00:00",
         "sourceUpdatedAt": "2026-11-07T11:08+09:00",
         "items": [
           {
@@ -806,7 +1361,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://charmant-hiuchi.jp/",
-        "checkedAt": "2026-11-27T11:23:36+00:00",
+        "checkedAt": "2026-11-27T20:17:09+00:00",
         "sourceUpdatedAt": "2026-11-07T11:08+09:00",
         "items": [
           {
