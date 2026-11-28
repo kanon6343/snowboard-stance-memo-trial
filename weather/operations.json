@@ -1,18 +1,18 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-28T02:56:40+00:00",
+  "generatedAt": "2026-11-28T12:18:00+00:00",
   "resorts": {
     "hirafu": {
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://www.grand-hirafu.jp/snow/status/",
-        "checkedAt": "2026-11-28T02:56:40+00:00",
+        "checkedAt": "2026-11-28T12:18:00+00:00",
         "sourceUpdatedAt": null,
         "items": [
           {
             "name": "エースゴンドラ(10人乗り)",
-            "status": "open",
-            "label": "運行中"
+            "status": "unknown",
+            "label": "本日営業終了"
           },
           {
             "name": "キングゴンドラ(8人乗り)",
@@ -26,8 +26,8 @@
           },
           {
             "name": "エース第3クワッド",
-            "status": "open",
-            "label": "運行中"
+            "status": "unknown",
+            "label": "本日営業終了"
           },
           {
             "name": "エース第4ペア",
@@ -59,7 +59,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://www.grand-hirafu.jp/snow/status/",
-        "checkedAt": "2026-11-28T02:56:40+00:00",
+        "checkedAt": "2026-11-28T12:18:00+00:00",
         "sourceUpdatedAt": null,
         "items": [
           {
@@ -109,13 +109,13 @@
           },
           {
             "name": "10. 白樺コース",
-            "status": "unknown",
-            "label": "オープン"
+            "status": "closed",
+            "label": "クローズ"
           },
           {
             "name": "11. センターコース",
-            "status": "unknown",
-            "label": "オープン"
+            "status": "closed",
+            "label": "クローズ"
           },
           {
             "name": "12. ラージコース",
@@ -179,7 +179,7 @@
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://rusutsu.com/lift-and-trail-status/",
-        "checkedAt": "2026-11-28T02:56:40+00:00",
+        "checkedAt": "2026-11-28T12:18:00+00:00",
         "sourceUpdatedAt": "2026-04-01T23:04:22+00:00",
         "items": [
           {
@@ -277,7 +277,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://rusutsu.com/lift-and-trail-status/",
-        "checkedAt": "2026-11-28T02:56:40+00:00",
+        "checkedAt": "2026-11-28T12:18:00+00:00",
         "sourceUpdatedAt": "2026-04-01T23:04:22+00:00",
         "items": [
           {
@@ -585,71 +585,146 @@
     },
     "kiroro": {
       "lifts": {
-        "state": "ok",
-        "sourceUrl": "https://www.kiroro.co.jp/ja/guide_map/",
-        "checkedAt": "2026-11-28T02:56:40+00:00",
-        "sourceUpdatedAt": "2026-11-28T06:59+09:00",
-        "items": [
-          {
-            "name": "キロロゴンドラ",
-            "status": "limited",
-            "label": "SUSPENDED"
-          },
-          {
-            "name": "朝里第２エクスプレス",
-            "status": "limited",
-            "label": "SUSPENDED"
-          },
-          {
-            "name": "余市第１エクスプレス",
-            "status": "open",
-            "label": "運行中"
-          },
-          {
-            "name": "余市第２リフト",
-            "status": "open",
-            "label": "運行中"
-          },
-          {
-            "name": "センターエクスプレス",
-            "status": "limited",
-            "label": "SUSPENDED"
-          },
-          {
-            "name": "長峰第１エクスプレス",
-            "status": "limited",
-            "label": "SUSPENDED"
-          },
-          {
-            "name": "長峰第２エクスプレス",
-            "status": "limited",
-            "label": "SUSPENDED"
-          },
-          {
-            "name": "ファミリーリフト",
-            "status": "open",
-            "label": "運行中"
-          },
-          {
-            "name": "ゲートウェイエクスプレス",
-            "status": "limited",
-            "label": "SUSPENDED"
-          }
-        ]
-      },
-      "courses": {
         "state": "unavailable",
         "sourceUrl": "https://www.kiroro.co.jp/ja/guide_map/",
-        "checkedAt": "2026-11-28T02:56:40+00:00",
+        "checkedAt": "2026-11-28T12:18:00+00:00",
         "sourceUpdatedAt": null,
         "items": []
+      },
+      "courses": {
+        "state": "ok",
+        "sourceUrl": "https://www.kiroro.co.jp/ja/guide_map/",
+        "checkedAt": "2026-11-28T12:18:00+00:00",
+        "sourceUpdatedAt": "2026-11-28T14:19+09:00",
+        "items": [
+          {
+            "name": "朝里ダイナミック",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "エキスパートA",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "エキスパートB",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "朝里パノラマ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "朝里第１-Ａ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "朝里第１-Ｂ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "朝里第２-Ａ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "朝里第２-Ｂ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "朝里第２-Ｃ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "余市第１-Ａ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "余市第１-Ｂ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "余市第２-Ａ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "余市第２-Ｂ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "センターＡ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "センターＢ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "センターＣ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "長峰第１",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "長峰第２-Ａ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "長峰第２-Ｂ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "長峰第２-Ｃ",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ファミリーコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "センターリンク",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "ゲートウェイコース",
+            "status": "closed",
+            "label": "クローズ"
+          },
+          {
+            "name": "パウダーライド",
+            "status": "closed",
+            "label": "クローズ"
+          }
+        ]
       }
     },
     "marunuma": {
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://www.marunuma.jp/winter/status/",
-        "checkedAt": "2026-11-28T02:56:40+00:00",
+        "checkedAt": "2026-11-28T12:18:00+00:00",
         "sourceUpdatedAt": null,
         "items": [
           {
@@ -697,7 +772,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://www.marunuma.jp/winter/status/",
-        "checkedAt": "2026-11-28T02:56:40+00:00",
+        "checkedAt": "2026-11-28T12:18:00+00:00",
         "sourceUpdatedAt": null,
         "items": [
           {
@@ -797,8 +872,8 @@
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://www.happo-one.jp/gelande/lift/",
-        "checkedAt": "2026-11-28T02:56:40+00:00",
-        "sourceUpdatedAt": "2026-11-28T08:18+09:00",
+        "checkedAt": "2026-11-28T12:18:00+00:00",
+        "sourceUpdatedAt": "2026-11-28T14:19+09:00",
         "items": [
           {
             "name": "グラートクワッド",
@@ -832,8 +907,8 @@
           },
           {
             "name": "八方尾根ゴンドラリフト「アダム」",
-            "status": "open",
-            "label": "○"
+            "status": "outside",
+            "label": "－"
           },
           {
             "name": "白樺第1ペア",
@@ -847,8 +922,8 @@
           },
           {
             "name": "パノラマペア",
-            "status": "open",
-            "label": "○"
+            "status": "outside",
+            "label": "－"
           },
           {
             "name": "国際第1ペア",
@@ -857,8 +932,8 @@
           },
           {
             "name": "国際第3ペア",
-            "status": "open",
-            "label": "○"
+            "status": "outside",
+            "label": "－"
           },
           {
             "name": "黒菱第2クワッド",
@@ -900,7 +975,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://www.happo-one.jp/gelande/condition/",
-        "checkedAt": "2026-11-28T02:56:40+00:00",
+        "checkedAt": "2026-11-28T12:18:00+00:00",
         "sourceUpdatedAt": "2026-11-23T07:28+09:00",
         "items": [
           {
@@ -1075,8 +1150,8 @@
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://www.okuibuki.co.jp/gelande/",
-        "checkedAt": "2026-11-28T02:56:40+00:00",
-        "sourceUpdatedAt": "2026-11-27T17:00+09:00",
+        "checkedAt": "2026-11-28T12:18:00+00:00",
+        "sourceUpdatedAt": "2026-11-28T17:00+09:00",
         "items": [
           {
             "name": "ファミリーペア",
@@ -1130,13 +1205,13 @@
           }
         ],
         "mode": "planned",
-        "targetDate": "2026-11-28"
+        "targetDate": "2026-11-29"
       },
       "courses": {
         "state": "ok",
         "sourceUrl": "https://www.okuibuki.co.jp/gelande/",
-        "checkedAt": "2026-11-28T02:56:40+00:00",
-        "sourceUpdatedAt": "2026-11-27T17:00+09:00",
+        "checkedAt": "2026-11-28T12:18:00+00:00",
+        "sourceUpdatedAt": "2026-11-28T17:00+09:00",
         "items": [
           {
             "name": "ビギナーゲレンデ",
@@ -1210,14 +1285,14 @@
           }
         ],
         "mode": "planned",
-        "targetDate": "2026-11-28"
+        "targetDate": "2026-11-29"
       }
     },
     "charmant": {
       "lifts": {
         "state": "ok",
         "sourceUrl": "https://charmant-hiuchi.jp/",
-        "checkedAt": "2026-11-28T02:56:40+00:00",
+        "checkedAt": "2026-11-28T12:18:00+00:00",
         "sourceUpdatedAt": "2026-11-07T11:08+09:00",
         "items": [
           {
@@ -1240,7 +1315,7 @@
       "courses": {
         "state": "ok",
         "sourceUrl": "https://charmant-hiuchi.jp/",
-        "checkedAt": "2026-11-28T02:56:40+00:00",
+        "checkedAt": "2026-11-28T12:18:00+00:00",
         "sourceUpdatedAt": "2026-11-07T11:08+09:00",
         "items": [
           {
